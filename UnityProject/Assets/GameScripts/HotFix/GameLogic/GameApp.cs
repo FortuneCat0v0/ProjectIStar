@@ -38,7 +38,7 @@ public partial class GameApp
     {
         // GameEvent.Get<ILoginUI>().ShowLoginUI();
         // GameModule.UI.ShowUIAsync<BattleMainUI>();
-        await GameModule.Scene.LoadSceneAsync("House_Drawingroom");
+        await GameModule.Scene.LoadSceneAsync("House");
         GameModule.Resource.LoadGameObject("Echo");
     }
     

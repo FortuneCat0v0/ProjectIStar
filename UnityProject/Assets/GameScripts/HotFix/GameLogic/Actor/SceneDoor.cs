@@ -1,69 +1,83 @@
-using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using TEngine;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace GameLogic
 {
     /// <summary>
-    /// 可配置的场景门。玩家进入触发范围后按交互键，切换到目标场景的目标门前。
+    /// 当前场景内的通用传送门。通过门 ID 配对，并同步平移玩家与主摄像机。
     /// </summary>
     [RequireComponent(typeof(Collider))]
     public sealed class SceneDoor : MonoBehaviour
     {
         [Header("Door Link")]
         [SerializeField] private string doorId;
-        [SerializeField] private string targetScene;
         [SerializeField] private string targetDoorId;
+        [SerializeField] private Transform cameraRoot;
 
         [Header("Interaction")]
         [SerializeField] private KeyCode interactKey = KeyCode.F;
         [SerializeField] private Vector3 arrivalOffset = new Vector3(0f, 0f, -1f);
 
-        private static Transform _transitioningPlayer;
-        private static string _pendingDoorId;
-        private static bool _isLoading;
+        private static readonly Dictionary<string, SceneDoor> Doors = new();
+        private static bool _isTeleporting;
 
         private Transform _playerInRange;
 
         private void Awake()
         {
-            Collider[] colliders = GetComponents<Collider>();
-            bool hasTrigger = false;
-            foreach (Collider doorCollider in colliders)
+            foreach (Collider doorCollider in GetComponents<Collider>())
             {
                 if (doorCollider.isTrigger)
                 {
-                    hasTrigger = true;
-                    break;
+                    return;
                 }
             }
 
-            if (!hasTrigger)
-            {
-                Log.Error($"SceneDoor '{name}' requires a trigger Collider.");
-            }
+            Log.Error($"SceneDoor '{name}' requires a trigger Collider.");
         }
 
         private void OnEnable()
         {
-            TryPlaceArrivingPlayer();
+            if (string.IsNullOrWhiteSpace(doorId))
+            {
+                Log.Error($"SceneDoor '{name}' requires a unique doorId.");
+                return;
+            }
+
+            if (Doors.TryGetValue(doorId, out SceneDoor existingDoor) && existingDoor != this)
+            {
+                Log.Error($"Duplicate SceneDoor id '{doorId}'. Door ids must be unique in the scene.");
+                return;
+            }
+
+            Doors[doorId] = this;
+        }
+
+        private void OnDisable()
+        {
+            if (Doors.TryGetValue(doorId, out SceneDoor existingDoor) && existingDoor == this)
+            {
+                Doors.Remove(doorId);
+            }
+
+            _playerInRange = null;
         }
 
         private void Update()
         {
-            if (_playerInRange == null || _isLoading || !Input.GetKeyDown(interactKey))
+            if (_playerInRange == null || _isTeleporting || !Input.GetKeyDown(interactKey))
             {
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(targetScene) || string.IsNullOrWhiteSpace(targetDoorId))
+            if (string.IsNullOrWhiteSpace(targetDoorId) || !Doors.TryGetValue(targetDoorId, out SceneDoor targetDoor))
             {
-                Log.Error($"SceneDoor '{name}' has an incomplete destination configuration.");
+                Log.Error($"SceneDoor '{name}' could not find target door '{targetDoorId}'.");
                 return;
             }
 
-            LoadDestinationAsync(_playerInRange).Forget();
+            Teleport(_playerInRange, targetDoor.GetArrivalPosition(), targetDoor.cameraRoot);
         }
 
         private void OnTriggerEnter(Collider other)
@@ -84,6 +98,11 @@ namespace GameLogic
             }
         }
 
+        private Vector3 GetArrivalPosition()
+        {
+            return transform.TransformPoint(arrivalOffset);
+        }
+
         private static Transform GetPlayerRoot(Collider other)
         {
             Transform candidate = other.attachedRigidbody != null
@@ -92,32 +111,29 @@ namespace GameLogic
             return candidate.CompareTag("Player") ? candidate : null;
         }
 
-        private async UniTaskVoid LoadDestinationAsync(Transform player)
+        private static void Teleport(Transform player, Vector3 destination, Transform targetCameraRoot)
         {
-            _isLoading = true;
-            _transitioningPlayer = player;
-            _pendingDoorId = targetDoorId;
-            DontDestroyOnLoad(player.gameObject);
+            _isTeleporting = true;
 
-            try
+            Camera mainCamera = Camera.main;
+            if (mainCamera != null && targetCameraRoot != null)
             {
-                await GameModule.Scene.LoadSceneAsync(targetScene, LoadSceneMode.Single);
+                Transform cameraTransform = mainCamera.transform;
+                cameraTransform.SetParent(targetCameraRoot, false);
+                cameraTransform.localPosition = Vector3.zero;
+                cameraTransform.localRotation = Quaternion.identity;
+                cameraTransform.localScale = Vector3.one;
             }
-            finally
+            else if (mainCamera == null)
             {
-                _isLoading = false;
+                Log.Warning("SceneDoor could not find a camera tagged MainCamera.");
             }
-        }
-
-        private void TryPlaceArrivingPlayer()
-        {
-            if (_transitioningPlayer == null || string.IsNullOrEmpty(_pendingDoorId) || doorId != _pendingDoorId)
+            else
             {
-                return;
+                Log.Warning("SceneDoor target has no CameraRoot configured.");
             }
 
-            Vector3 destination = transform.TransformPoint(arrivalOffset);
-            if (_transitioningPlayer.TryGetComponent(out Rigidbody body))
+            if (player.TryGetComponent(out Rigidbody body))
             {
                 body.position = destination;
                 body.velocity = Vector3.zero;
@@ -125,12 +141,11 @@ namespace GameLogic
             }
             else
             {
-                _transitioningPlayer.position = destination;
+                player.position = destination;
             }
 
-            // _transitioningPlayer.rotation = transform.rotation;
-            _transitioningPlayer = null;
-            _pendingDoorId = null;
+            Physics.SyncTransforms();
+            _isTeleporting = false;
         }
     }
 }
