@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection;
+using Cysharp.Threading.Tasks;
 using GameLogic;
 #if ENABLE_OBFUZ
 using Obfuz;
@@ -30,13 +31,15 @@ public partial class GameApp
         Log.Warning("======= Entrance GameApp =======");
         Utility.Unity.AddDestroyListener(Release);
         Log.Warning("======= StartGameLogic =======");
-        StartGameLogic();
+        StartGameLogic().Forget();
     }
     
-    private static void StartGameLogic()
+    private static async UniTask StartGameLogic()
     {
         // GameEvent.Get<ILoginUI>().ShowLoginUI();
-        GameModule.UI.ShowUIAsync<BattleMainUI>();
+        // GameModule.UI.ShowUIAsync<BattleMainUI>();
+        await GameModule.Scene.LoadSceneAsync("House_Drawingroom");
+        GameModule.Resource.LoadGameObject("Echo");
     }
     
     private static void Release()
