@@ -10,15 +10,16 @@
 using Luban;
 
 
-namespace GameConfig.course
+namespace GameConfig.game_event
 {
-public sealed partial class Course : Luban.BeanBase
+public sealed partial class GameEvent : Luban.BeanBase
 {
-    public Course(ByteBuf _buf) 
+    public GameEvent(ByteBuf _buf) 
     {
         Id = _buf.ReadInt();
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
+        Type = (GameEventType)_buf.ReadInt();
         {int n0 = _buf.ReadSize(); PreCourseIds = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); PreCourseIds.Add(_e0);}}
         {int n0 = _buf.ReadSize(); NeedItemIds = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); NeedItemIds.Add(_e0);}}
         WasteTime = _buf.ReadInt();
@@ -30,9 +31,9 @@ public sealed partial class Course : Luban.BeanBase
         CompletionIntelligence = _buf.ReadInt();
     }
 
-    public static Course DeserializeCourse(ByteBuf _buf)
+    public static GameEvent DeserializeGameEvent(ByteBuf _buf)
     {
-        return new course.Course(_buf);
+        return new game_event.GameEvent(_buf);
     }
 
     /// <summary>
@@ -47,11 +48,12 @@ public sealed partial class Course : Luban.BeanBase
     /// 描述
     /// </summary>
     public readonly string Desc;
+    public readonly GameEventType Type;
     /// <summary>
-    /// 前置课程
+    /// 前置事件
     /// </summary>
     public readonly System.Collections.Generic.List<int> PreCourseIds;
-    public System.Collections.Generic.List<course.Course> PreCourseIds_Ref;
+    public System.Collections.Generic.List<game_event.GameEvent> PreCourseIds_Ref;
     /// <summary>
     /// 需要道具
     /// </summary>
@@ -72,18 +74,18 @@ public sealed partial class Course : Luban.BeanBase
     public readonly int PerLessonPhysique;
     public readonly int PerLessonIntelligence;
     /// <summary>
-    /// 完成课程增加属性
+    /// 完成增加属性
     /// </summary>
     public readonly int CompletionPhysique;
     public readonly int CompletionIntelligence;
    
-    public const int __ID__ = -125350546;
+    public const int __ID__ = 1615218951;
     public override int GetTypeId() => __ID__;
 
     public  void ResolveRef(Tables tables)
     {
-        PreCourseIds_Ref = new System.Collections.Generic.List<course.Course>();
-        foreach (var _v in PreCourseIds) { PreCourseIds_Ref.Add(tables.TbCourse.GetOrDefault(_v)); }
+        PreCourseIds_Ref = new System.Collections.Generic.List<game_event.GameEvent>();
+        foreach (var _v in PreCourseIds) { PreCourseIds_Ref.Add(tables.TbGameEvent.GetOrDefault(_v)); }
 
         NeedItemIds_Ref = new System.Collections.Generic.List<item.Item>();
         foreach (var _v in NeedItemIds) { NeedItemIds_Ref.Add(tables.TbItem.GetOrDefault(_v)); }
@@ -96,6 +98,7 @@ public sealed partial class Course : Luban.BeanBase
         + "id:" + Id + ","
         + "name:" + Name + ","
         + "desc:" + Desc + ","
+        + "type:" + Type + ","
         + "preCourseIds:" + Luban.StringUtil.CollectionToString(PreCourseIds) + ","
         + "needItemIds:" + Luban.StringUtil.CollectionToString(NeedItemIds) + ","
         + "wasteTime:" + WasteTime + ","

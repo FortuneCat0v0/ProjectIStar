@@ -43,4 +43,8 @@
             <option name="constructor" value="ExternalTypeUtil.NewVector3" />
         </mapper>
     </bean>
+    <enum name="GameEventType" comment="游戏事件类型" unique="TRUE" flags="TRUE">
+        <var name="None" alias="" value="0"/>
+        <var name="Course" alias="课程" value="1"/>
+    </enum>
 </module>

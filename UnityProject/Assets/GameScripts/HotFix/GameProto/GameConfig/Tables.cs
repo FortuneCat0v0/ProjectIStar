@@ -13,13 +13,13 @@ namespace GameConfig
 {
 public partial class Tables
 {
-    public course.TbCourse TbCourse {get; }
+    public game_event.TbGameEvent TbGameEvent {get; }
     public global.TbGlobal TbGlobal {get; }
     public item.TbItem TbItem {get; }
 
     public Tables(System.Func<string, ByteBuf> loader)
     {
-        TbCourse = new course.TbCourse(loader("course_tbcourse"));
+        TbGameEvent = new game_event.TbGameEvent(loader("game_event_tbgameevent"));
         TbGlobal = new global.TbGlobal(loader("global_tbglobal"));
         TbItem = new item.TbItem(loader("item_tbitem"));
         ResolveRef();
@@ -27,7 +27,7 @@ public partial class Tables
     
     private void ResolveRef()
     {
-        TbCourse.ResolveRef(this);
+        TbGameEvent.ResolveRef(this);
         TbGlobal.ResolveRef(this);
         TbItem.ResolveRef(this);
     }
