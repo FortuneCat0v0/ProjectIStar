@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GameLogic;
+using TEngine;
 
 public class CourseData
 {
@@ -33,14 +34,22 @@ public class CharacterData
 /// </summary>
 public sealed class GameData : Singleton<GameData>
 {
-    // 体力
-    public int Stamina { get; set; }
-    // 压力
-    public int Stress { get; set; }
-    // 金钱
-    public int Money { get; set; }
+    private int _day;
+    private int _time;
+    private int _stamina;
+    private int _stress;
+    private int _money;
+
     // 当前天数
-    public int Day { get; set; }
+    public int Day { get => _day; set => SetValue(ref _day, value); }
+    // 时间，单位为分钟
+    public int Time { get => _time; set => SetValue(ref _time, value); }
+    // 体力
+    public int Stamina { get => _stamina; set => SetValue(ref _stamina, value); }
+    // 压力
+    public int Stress { get => _stress; set => SetValue(ref _stress, value); }
+    // 金钱
+    public int Money { get => _money; set => SetValue(ref _money, value); }
     
     public CharacterData SisterData1 { get; set; }
     public CharacterData SisterData2 { get; set; }
@@ -48,6 +57,22 @@ public sealed class GameData : Singleton<GameData>
     protected override void OnInit()
     {
         Reset();
+        GameEvent.EventMgr.GetInterface<IGameDataEvent>().DataChanged();
+    }
+
+    protected override void OnRelease()
+    {
+    }
+
+    private void SetValue(ref int field, int value)
+    {
+        if (field == value)
+        {
+            return;
+        }
+
+        field = value;
+        GameEvent.EventMgr.GetInterface<IGameDataEvent>().DataChanged();
     }
 
     /// <summary>
@@ -55,10 +80,11 @@ public sealed class GameData : Singleton<GameData>
     /// </summary>
     public void Reset()
     {
-        Stamina = 0;
-        Stress = 0;
-        Money = 0;
-        Day = 0;
+        _stamina = ConfigSystem.Instance.Tables.TbGlobal.MaxStress;
+        _stress = 0;
+        _money = 100;
+        _day = 1;
+        _time = 7 * 60;
         SisterData1 = new CharacterData();
         SisterData2 = new CharacterData();
     }

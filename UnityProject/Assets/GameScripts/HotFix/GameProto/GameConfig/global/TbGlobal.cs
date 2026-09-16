@@ -31,6 +31,14 @@ public partial class TbGlobal
     /// 最大背包容量
     /// </summary>
      public int MaxBagNum => _data.MaxBagNum;
+    /// <summary>
+    /// 最大体力
+    /// </summary>
+     public int MaxStamina => _data.MaxStamina;
+    /// <summary>
+    /// 最大压力
+    /// </summary>
+     public int MaxStress => _data.MaxStress;
     
     public void ResolveRef(Tables tables)
     {

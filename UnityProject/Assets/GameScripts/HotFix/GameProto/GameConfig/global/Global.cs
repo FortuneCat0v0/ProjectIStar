@@ -17,6 +17,8 @@ public sealed partial class Global : Luban.BeanBase
     public Global(ByteBuf _buf) 
     {
         MaxBagNum = _buf.ReadInt();
+        MaxStamina = _buf.ReadInt();
+        MaxStress = _buf.ReadInt();
     }
 
     public static Global DeserializeGlobal(ByteBuf _buf)
@@ -28,6 +30,14 @@ public sealed partial class Global : Luban.BeanBase
     /// 最大背包容量
     /// </summary>
     public readonly int MaxBagNum;
+    /// <summary>
+    /// 最大体力
+    /// </summary>
+    public readonly int MaxStamina;
+    /// <summary>
+    /// 最大压力
+    /// </summary>
+    public readonly int MaxStress;
    
     public const int __ID__ = 1250542702;
     public override int GetTypeId() => __ID__;
@@ -40,6 +50,8 @@ public sealed partial class Global : Luban.BeanBase
     {
         return "{ "
         + "MaxBagNum:" + MaxBagNum + ","
+        + "MaxStamina:" + MaxStamina + ","
+        + "MaxStress:" + MaxStress + ","
         + "}";
     }
 }
