@@ -1,0 +1,14 @@
+[
+  {
+    "id": 10000,
+    "name": "文字课",
+    "desc": "",
+    "pre_courseIds": [],
+    "recommended_physique": 0,
+    "recommended_intelligence": 0,
+    "per_lesson_physique": 0,
+    "per_lesson_intelligence": 0,
+    "completion_physique": 0,
+    "completion_intelligence": 0
+  }
+]
