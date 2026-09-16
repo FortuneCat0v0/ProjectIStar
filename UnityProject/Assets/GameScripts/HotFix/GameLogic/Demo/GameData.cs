@@ -10,10 +10,33 @@ public class CourseData
 
 public class CharacterData
 {
+    public string Name;
+
+    private int _affection;
+    private int _trust;
+    
     // 好感度
-    public int Affection;
+    public int Affection
+    {
+        get => _affection;
+        set
+        {
+            _affection = value;
+            GameEvent.EventMgr.GetInterface<IGameDataEvent>().DataChanged();
+        }
+    }
     // 信任度
-    public int Trust;
+    public int Trust
+    {
+        get => _trust;
+        set
+        {
+            _trust = value;
+            GameEvent.EventMgr.GetInterface<IGameDataEvent>().DataChanged();
+        }
+    }
+
+    // -----先不用-----
     // 体魄
     public int Physique;
     // 智力
@@ -86,6 +109,8 @@ public sealed class GameData : Singleton<GameData>
         _day = 1;
         _time = 7 * 60;
         SisterData1 = new CharacterData();
+        SisterData1.Name = "NPC1";
         SisterData2 = new CharacterData();
+        SisterData2.Name = "NPC2";
     }
 }
