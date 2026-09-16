@@ -20,6 +20,8 @@ public sealed partial class Course : Luban.BeanBase
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
         {int n0 = _buf.ReadSize(); PreCourseIds = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); PreCourseIds.Add(_e0);}}
+        {int n0 = _buf.ReadSize(); NeedItemIds = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); NeedItemIds.Add(_e0);}}
+        WasteTime = _buf.ReadInt();
         RecommendedPhysique = _buf.ReadInt();
         RecommendedIntelligence = _buf.ReadInt();
         PerLessonPhysique = _buf.ReadInt();
@@ -51,6 +53,15 @@ public sealed partial class Course : Luban.BeanBase
     public readonly System.Collections.Generic.List<int> PreCourseIds;
     public System.Collections.Generic.List<course.Course> PreCourseIds_Ref;
     /// <summary>
+    /// 需要道具
+    /// </summary>
+    public readonly System.Collections.Generic.List<int> NeedItemIds;
+    public System.Collections.Generic.List<item.Item> NeedItemIds_Ref;
+    /// <summary>
+    /// 消耗时间
+    /// </summary>
+    public readonly int WasteTime;
+    /// <summary>
     /// 推荐属性值
     /// </summary>
     public readonly int RecommendedPhysique;
@@ -74,6 +85,9 @@ public sealed partial class Course : Luban.BeanBase
         PreCourseIds_Ref = new System.Collections.Generic.List<course.Course>();
         foreach (var _v in PreCourseIds) { PreCourseIds_Ref.Add(tables.TbCourse.GetOrDefault(_v)); }
 
+        NeedItemIds_Ref = new System.Collections.Generic.List<item.Item>();
+        foreach (var _v in NeedItemIds) { NeedItemIds_Ref.Add(tables.TbItem.GetOrDefault(_v)); }
+
     }
 
     public override string ToString()
@@ -83,6 +97,8 @@ public sealed partial class Course : Luban.BeanBase
         + "name:" + Name + ","
         + "desc:" + Desc + ","
         + "preCourseIds:" + Luban.StringUtil.CollectionToString(PreCourseIds) + ","
+        + "needItemIds:" + Luban.StringUtil.CollectionToString(NeedItemIds) + ","
+        + "wasteTime:" + WasteTime + ","
         + "recommendedPhysique:" + RecommendedPhysique + ","
         + "recommendedIntelligence:" + RecommendedIntelligence + ","
         + "perLessonPhysique:" + PerLessonPhysique + ","
