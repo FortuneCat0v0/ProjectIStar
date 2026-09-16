@@ -37,7 +37,7 @@ public partial class GameApp
     private static async UniTask StartGameLogic()
     {
         // GameEvent.Get<ILoginUI>().ShowLoginUI();
-        // GameModule.UI.ShowUIAsync<BattleMainUI>();
+        GameModule.UI.ShowUIAsync<MainUI>();
     }
     
     private static void Release()
