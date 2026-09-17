@@ -16,11 +16,11 @@ public sealed partial class DialogueRow : Luban.BeanBase
 {
     public DialogueRow(ByteBuf _buf) 
     {
-        Id = _buf.ReadInt();
+        Id = _buf.ReadString();
         Type = (DialogueType)_buf.ReadInt();
         Speaker = _buf.ReadString();
         Text = _buf.ReadString();
-        NextId = _buf.ReadInt();
+        NextId = _buf.ReadString();
         {int n0 = _buf.ReadSize(); Choices = new System.Collections.Generic.List<DialogueChoice>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { DialogueChoice _e0;  _e0 = global::GameConfig.DialogueChoice.DeserializeDialogueChoice(_buf); Choices.Add(_e0);}}
         {int n0 = _buf.ReadSize(); Parameters = new System.Collections.Generic.List<DialogueParameter>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { DialogueParameter _e0;  _e0 = global::GameConfig.DialogueParameter.DeserializeDialogueParameter(_buf); Parameters.Add(_e0);}}
     }
@@ -33,7 +33,7 @@ public sealed partial class DialogueRow : Luban.BeanBase
     /// <summary>
     /// id
     /// </summary>
-    public readonly int Id;
+    public readonly string Id;
     /// <summary>
     /// 类型
     /// </summary>
@@ -49,7 +49,7 @@ public sealed partial class DialogueRow : Luban.BeanBase
     /// <summary>
     /// 普通节点的下一个节点
     /// </summary>
-    public readonly int NextId;
+    public readonly string NextId;
     /// <summary>
     /// 选项节点
     /// </summary>

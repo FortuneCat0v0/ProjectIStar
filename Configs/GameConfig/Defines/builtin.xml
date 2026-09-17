@@ -58,7 +58,7 @@
     </enum>
     <bean name="DialogueChoice" valueType="1" sep=";">
         <var name="Text" type="string"/>
-        <var name="NextId" type="int"/>
+        <var name="NextId" type="string"/>
     </bean>
     <bean name="DialogueParameter" valueType="1" sep=";">
         <var name="Key" type="string"/>

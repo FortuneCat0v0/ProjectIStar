@@ -14,13 +14,13 @@ namespace GameConfig
 {
 public partial class TbDialogue
 {
-    private readonly System.Collections.Generic.Dictionary<int, DialogueRow> _dataMap;
+    private readonly System.Collections.Generic.Dictionary<string, DialogueRow> _dataMap;
     private readonly System.Collections.Generic.List<DialogueRow> _dataList;
     
     public TbDialogue(ByteBuf _buf)
     {
         int n = _buf.ReadSize();
-        _dataMap = new System.Collections.Generic.Dictionary<int, DialogueRow>(n);
+        _dataMap = new System.Collections.Generic.Dictionary<string, DialogueRow>(n);
         _dataList = new System.Collections.Generic.List<DialogueRow>(n);
         for(int i = n ; i > 0 ; --i)
         {
@@ -31,12 +31,12 @@ public partial class TbDialogue
         }
     }
 
-    public System.Collections.Generic.IReadOnlyDictionary<int, DialogueRow> DataMap => _dataMap;
+    public System.Collections.Generic.IReadOnlyDictionary<string, DialogueRow> DataMap => _dataMap;
     public System.Collections.Generic.IReadOnlyList<DialogueRow> DataList => _dataList;
 
-    public DialogueRow GetOrDefault(int key) => _dataMap.TryGetValue(key, out var v) ? v : default;
-    public DialogueRow Get(int key) => _dataMap[key];
-    public DialogueRow this[int key] => _dataMap[key];
+    public DialogueRow GetOrDefault(string key) => _dataMap.TryGetValue(key, out var v) ? v : default;
+    public DialogueRow Get(string key) => _dataMap[key];
+    public DialogueRow this[string key] => _dataMap[key];
 
     public void ResolveRef(Tables tables)
     {

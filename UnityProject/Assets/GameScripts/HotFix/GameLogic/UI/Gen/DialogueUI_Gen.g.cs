@@ -19,6 +19,8 @@ namespace GameLogic
 		private UIBindComponent m_bindComponent;
 		private Button m_btnContinue = null!;
 		private TextMeshProUGUI m_tmpContent = null!;
+		private Transform m_tfChoiceList = null!;
+		private GameObject m_goChoice = null!;
 
 		protected override void ScriptGenerator()
 		{
@@ -30,6 +32,8 @@ namespace GameLogic
 			}
 			m_btnContinue = m_bindComponent.GetComponent<Button>(0);
 			m_tmpContent = m_bindComponent.GetComponent<TextMeshProUGUI>(1);
+			m_tfChoiceList = m_bindComponent.GetComponent<Transform>(2);
+			m_goChoice = m_bindComponent.GetComponent<RectTransform>(3).gameObject;
 			m_btnContinue.onClick.RemoveAllListeners();
 			m_btnContinue.onClick.AddListener(OnClickContinueBtn);
 		}

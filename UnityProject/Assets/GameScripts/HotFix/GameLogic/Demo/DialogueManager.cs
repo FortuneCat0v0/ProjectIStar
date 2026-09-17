@@ -6,13 +6,13 @@ namespace GameLogic
 {
     public class DialogueManager : Singleton<DialogueManager>
     {
-        public int CurrentDialogueId { get; private set; }
+        public string CurrentDialogueId { get; private set; }
 
         protected override void OnInit()
         {
         }
 
-        public void EnterDialogue(int id)
+        public void EnterDialogue(string id)
         {
             DialogueRow dialogueRow = ConfigSystem.Instance.Tables.TbDialogue.GetOrDefault(id);
             if (dialogueRow == null)
@@ -30,6 +30,7 @@ namespace GameLogic
 
             if (dialogueRow.Type == DialogueType.Choice)
             {
+                ShowLine().Forget();
             }
 
             if (dialogueRow.Type == DialogueType.Condition)
@@ -46,7 +47,7 @@ namespace GameLogic
 
             if (dialogueRow.Type == DialogueType.End)
             {
-                CurrentDialogueId = 0;
+                CurrentDialogueId = null;
                 GameModule.UI.CloseUI<DialogueUI>();
             }
         }
@@ -60,7 +61,7 @@ namespace GameLogic
 
         public void Continue()
         {
-            if (CurrentDialogueId == 0)
+            if (CurrentDialogueId == null)
             {
                 return;
             }
@@ -73,9 +74,9 @@ namespace GameLogic
             }
         }
 
-        public void SelectChoice(DialogueChoice choice)
+        public void SelectChoice(string id)
         {
-            EnterDialogue(choice.NextId);
+            EnterDialogue(id);
         }
     }
 }
