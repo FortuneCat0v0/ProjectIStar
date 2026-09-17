@@ -48,8 +48,20 @@
         <var name="Course" alias="课程" value="1"/>
         <var name="Dialogue" alias="对话" value="2"/>
     </enum>
-    <enum name="EffectActionType" comment="效果行为类型" unique="TRUE" flags="TRUE">
-        <var name="None" alias="" value="0"/>
-        <var name="Dialogue" alias="对话" value="1"/>
+    <enum name="DialogueType" comment="对话类型" unique="TRUE" flags="TRUE">
+        <var name="Line" alias="" value="0"/>
+        <var name="Choice" alias="" value="1"/>
+        <var name="Condition" alias="" value="2"/>
+        <var name="Command" alias="" value="3"/>
+        <var name="Jump" alias="" value="4"/>
+        <var name="End" alias="" value="5"/>
     </enum>
+    <bean name="DialogueChoice" valueType="1" sep=";">
+        <var name="Text" type="string"/>
+        <var name="NextId" type="int"/>
+    </bean>
+    <bean name="DialogueParameter" valueType="1" sep=";">
+        <var name="Key" type="string"/>
+        <var name="Value" type="string"/>
+    </bean>
 </module>

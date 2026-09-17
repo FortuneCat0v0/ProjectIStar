@@ -28,6 +28,7 @@ namespace GameLogic
 		private TextMeshProUGUI m_tmpSister2Name = null!;
 		private TextMeshProUGUI m_tmpSister2Affection = null!;
 		private TextMeshProUGUI m_tmpSister2Trust = null!;
+		private Button m_btnTest = null!;
 
 		protected override void ScriptGenerator()
 		{
@@ -48,11 +49,16 @@ namespace GameLogic
 			m_tmpSister2Name = m_bindComponent.GetComponent<TextMeshProUGUI>(8);
 			m_tmpSister2Affection = m_bindComponent.GetComponent<TextMeshProUGUI>(9);
 			m_tmpSister2Trust = m_bindComponent.GetComponent<TextMeshProUGUI>(10);
+			m_btnTest = m_bindComponent.GetComponent<Button>(11);
+			m_btnTest.onClick.RemoveAllListeners();
+			m_btnTest.onClick.AddListener(OnClickTestBtn);
 		}
 
 		#endregion
 
 		#region 事件
+
+		private partial void OnClickTestBtn();
 
 		#endregion
 	}

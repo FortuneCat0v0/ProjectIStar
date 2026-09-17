@@ -18,6 +18,11 @@ namespace GameLogic
             RefreshData();
         }
 
+        private partial void OnClickTestBtn()
+        {
+            DialogueManager.Instance.EnterDialogue(10001);
+        }
+
         private void RefreshData()
         {
             GameDataManager dataManager = GameDataManager.Instance;

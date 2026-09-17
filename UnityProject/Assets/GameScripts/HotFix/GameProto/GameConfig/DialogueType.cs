@@ -12,16 +12,17 @@
 namespace GameConfig
 { 
     /// <summary>
-    /// 效果行为类型
+    /// 对话类型
     /// </summary>
     [System.Flags]
-    public enum EffectActionType
+    public enum DialogueType
     {
-        None = 0,
-        /// <summary>
-        /// 对话
-        /// </summary>
-        Dialogue = 1,
+        Line = 0,
+        Choice = 1,
+        Condition = 2,
+        Command = 3,
+        Jump = 4,
+        End = 5,
     }
 
 } 

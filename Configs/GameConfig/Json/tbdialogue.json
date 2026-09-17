@@ -1,0 +1,29 @@
+[
+  {
+    "id": 10001,
+    "type": 0,
+    "speaker": "我",
+    "text": "你好",
+    "next_id": 1000101,
+    "choices": [],
+    "parameters": []
+  },
+  {
+    "id": 1000101,
+    "type": 0,
+    "speaker": "张三",
+    "text": "你也好",
+    "next_id": 1000102,
+    "choices": [],
+    "parameters": []
+  },
+  {
+    "id": 1000102,
+    "type": 5,
+    "speaker": "",
+    "text": "",
+    "next_id": 0,
+    "choices": [],
+    "parameters": []
+  }
+]

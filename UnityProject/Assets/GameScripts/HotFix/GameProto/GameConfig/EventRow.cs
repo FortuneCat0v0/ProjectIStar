@@ -20,9 +20,7 @@ public sealed partial class EventRow : Luban.BeanBase
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
         Type = (GameEventType)_buf.ReadInt();
-        EffectId = _buf.ReadInt();
-        EffectId_Ref = null;
-        {int n0 = _buf.ReadSize(); PreCourseIds = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); PreCourseIds.Add(_e0);}}
+        {int __n0 = _buf.ReadSize(); ActionParamInt = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); ActionParamInt[__index0] = __e0;}}
         {int n0 = _buf.ReadSize(); NeedItemIds = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); NeedItemIds.Add(_e0);}}
         WasteTime = _buf.ReadInt();
         RecommendedPhysique = _buf.ReadInt();
@@ -39,7 +37,7 @@ public sealed partial class EventRow : Luban.BeanBase
     }
 
     /// <summary>
-    /// 这是id
+    /// id
     /// </summary>
     public readonly int Id;
     /// <summary>
@@ -52,15 +50,9 @@ public sealed partial class EventRow : Luban.BeanBase
     public readonly string Desc;
     public readonly GameEventType Type;
     /// <summary>
-    /// 效果id
+    /// 操作参数
     /// </summary>
-    public readonly int EffectId;
-    public EffectRow EffectId_Ref;
-    /// <summary>
-    /// 前置事件
-    /// </summary>
-    public readonly System.Collections.Generic.List<int> PreCourseIds;
-    public System.Collections.Generic.List<EventRow> PreCourseIds_Ref;
+    public readonly int[] ActionParamInt;
     /// <summary>
     /// 需要道具
     /// </summary>
@@ -91,10 +83,6 @@ public sealed partial class EventRow : Luban.BeanBase
 
     public  void ResolveRef(Tables tables)
     {
-        EffectId_Ref = tables.TbEffect.GetOrDefault(EffectId);
-        PreCourseIds_Ref = new System.Collections.Generic.List<EventRow>();
-        foreach (var _v in PreCourseIds) { PreCourseIds_Ref.Add(tables.TbEvent.GetOrDefault(_v)); }
-
         NeedItemIds_Ref = new System.Collections.Generic.List<ItemRow>();
         foreach (var _v in NeedItemIds) { NeedItemIds_Ref.Add(tables.TbItem.GetOrDefault(_v)); }
 
@@ -107,8 +95,7 @@ public sealed partial class EventRow : Luban.BeanBase
         + "name:" + Name + ","
         + "desc:" + Desc + ","
         + "type:" + Type + ","
-        + "effectId:" + EffectId + ","
-        + "preCourseIds:" + Luban.StringUtil.CollectionToString(PreCourseIds) + ","
+        + "actionParamInt:" + Luban.StringUtil.CollectionToString(ActionParamInt) + ","
         + "needItemIds:" + Luban.StringUtil.CollectionToString(NeedItemIds) + ","
         + "wasteTime:" + WasteTime + ","
         + "recommendedPhysique:" + RecommendedPhysique + ","

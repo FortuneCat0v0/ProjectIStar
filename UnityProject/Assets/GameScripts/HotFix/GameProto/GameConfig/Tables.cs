@@ -13,14 +13,14 @@ namespace GameConfig
 {
 public partial class Tables
 {
-    public TbEffect TbEffect {get; }
+    public TbDialogue TbDialogue {get; }
     public TbEvent TbEvent {get; }
     public TbGlobal TbGlobal {get; }
     public TbItem TbItem {get; }
 
     public Tables(System.Func<string, ByteBuf> loader)
     {
-        TbEffect = new TbEffect(loader("tbeffect"));
+        TbDialogue = new TbDialogue(loader("tbdialogue"));
         TbEvent = new TbEvent(loader("tbevent"));
         TbGlobal = new TbGlobal(loader("tbglobal"));
         TbItem = new TbItem(loader("tbitem"));
@@ -29,7 +29,7 @@ public partial class Tables
     
     private void ResolveRef()
     {
-        TbEffect.ResolveRef(this);
+        TbDialogue.ResolveRef(this);
         TbEvent.ResolveRef(this);
         TbGlobal.ResolveRef(this);
         TbItem.ResolveRef(this);
