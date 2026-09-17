@@ -10,20 +10,20 @@
 using Luban;
 
 
-namespace GameConfig.global
+namespace GameConfig
 {
-public sealed partial class Global : Luban.BeanBase
+public sealed partial class GlobalRow : Luban.BeanBase
 {
-    public Global(ByteBuf _buf) 
+    public GlobalRow(ByteBuf _buf) 
     {
         MaxBagNum = _buf.ReadInt();
         MaxStamina = _buf.ReadInt();
         MaxStress = _buf.ReadInt();
     }
 
-    public static Global DeserializeGlobal(ByteBuf _buf)
+    public static GlobalRow DeserializeGlobalRow(ByteBuf _buf)
     {
-        return new global.Global(_buf);
+        return new GlobalRow(_buf);
     }
 
     /// <summary>
@@ -39,7 +39,7 @@ public sealed partial class Global : Luban.BeanBase
     /// </summary>
     public readonly int MaxStress;
    
-    public const int __ID__ = 1250542702;
+    public const int __ID__ = -1903061225;
     public override int GetTypeId() => __ID__;
 
     public  void ResolveRef(Tables tables)

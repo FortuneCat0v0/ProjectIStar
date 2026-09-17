@@ -1,0 +1,18 @@
+[
+  {
+    "id": 10001,
+    "name": "文字课",
+    "desc": "",
+    "type": 1,
+    "effect_id": 1000100001,
+    "pre_courseIds": [],
+    "need_itemIds": [],
+    "waste_time": 30,
+    "recommended_physique": 0,
+    "recommended_intelligence": 0,
+    "per_lesson_physique": 0,
+    "per_lesson_intelligence": 0,
+    "completion_physique": 0,
+    "completion_intelligence": 0
+  }
+]

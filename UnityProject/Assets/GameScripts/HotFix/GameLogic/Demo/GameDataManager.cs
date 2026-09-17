@@ -55,7 +55,7 @@ public class CharacterData
 /// <summary>
 /// 记录当前游戏进程中的公共数据。
 /// </summary>
-public sealed class GameData : Singleton<GameData>
+public sealed class GameDataManager : Singleton<GameDataManager>
 {
     private int _day;
     private int _time;

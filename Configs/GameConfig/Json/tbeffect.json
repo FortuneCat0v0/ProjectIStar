@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1000100001,
+    "next_id": 1000100002,
+    "desc": "",
+    "type": 1,
+    "action_param_int": [],
+    "action_param_str": [
+      "你好,1"
+    ]
+  },
+  {
+    "id": 1000100002,
+    "next_id": 0,
+    "desc": "",
+    "type": 1,
+    "action_param_int": [],
+    "action_param_str": [
+      "你好,2"
+    ]
+  }
+]

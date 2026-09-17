@@ -10,16 +10,18 @@
 using Luban;
 
 
-namespace GameConfig.game_event
+namespace GameConfig
 {
-public sealed partial class GameEvent : Luban.BeanBase
+public sealed partial class EventRow : Luban.BeanBase
 {
-    public GameEvent(ByteBuf _buf) 
+    public EventRow(ByteBuf _buf) 
     {
         Id = _buf.ReadInt();
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
         Type = (GameEventType)_buf.ReadInt();
+        EffectId = _buf.ReadInt();
+        EffectId_Ref = null;
         {int n0 = _buf.ReadSize(); PreCourseIds = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); PreCourseIds.Add(_e0);}}
         {int n0 = _buf.ReadSize(); NeedItemIds = new System.Collections.Generic.List<int>(n0);for(var i0 = 0 ; i0 < n0 ; i0++) { int _e0;  _e0 = _buf.ReadInt(); NeedItemIds.Add(_e0);}}
         WasteTime = _buf.ReadInt();
@@ -31,9 +33,9 @@ public sealed partial class GameEvent : Luban.BeanBase
         CompletionIntelligence = _buf.ReadInt();
     }
 
-    public static GameEvent DeserializeGameEvent(ByteBuf _buf)
+    public static EventRow DeserializeEventRow(ByteBuf _buf)
     {
-        return new game_event.GameEvent(_buf);
+        return new EventRow(_buf);
     }
 
     /// <summary>
@@ -50,15 +52,20 @@ public sealed partial class GameEvent : Luban.BeanBase
     public readonly string Desc;
     public readonly GameEventType Type;
     /// <summary>
+    /// 效果id
+    /// </summary>
+    public readonly int EffectId;
+    public EffectRow EffectId_Ref;
+    /// <summary>
     /// 前置事件
     /// </summary>
     public readonly System.Collections.Generic.List<int> PreCourseIds;
-    public System.Collections.Generic.List<game_event.GameEvent> PreCourseIds_Ref;
+    public System.Collections.Generic.List<EventRow> PreCourseIds_Ref;
     /// <summary>
     /// 需要道具
     /// </summary>
     public readonly System.Collections.Generic.List<int> NeedItemIds;
-    public System.Collections.Generic.List<item.Item> NeedItemIds_Ref;
+    public System.Collections.Generic.List<ItemRow> NeedItemIds_Ref;
     /// <summary>
     /// 消耗时间
     /// </summary>
@@ -79,15 +86,16 @@ public sealed partial class GameEvent : Luban.BeanBase
     public readonly int CompletionPhysique;
     public readonly int CompletionIntelligence;
    
-    public const int __ID__ = 1615218951;
+    public const int __ID__ = 342750464;
     public override int GetTypeId() => __ID__;
 
     public  void ResolveRef(Tables tables)
     {
-        PreCourseIds_Ref = new System.Collections.Generic.List<game_event.GameEvent>();
-        foreach (var _v in PreCourseIds) { PreCourseIds_Ref.Add(tables.TbGameEvent.GetOrDefault(_v)); }
+        EffectId_Ref = tables.TbEffect.GetOrDefault(EffectId);
+        PreCourseIds_Ref = new System.Collections.Generic.List<EventRow>();
+        foreach (var _v in PreCourseIds) { PreCourseIds_Ref.Add(tables.TbEvent.GetOrDefault(_v)); }
 
-        NeedItemIds_Ref = new System.Collections.Generic.List<item.Item>();
+        NeedItemIds_Ref = new System.Collections.Generic.List<ItemRow>();
         foreach (var _v in NeedItemIds) { NeedItemIds_Ref.Add(tables.TbItem.GetOrDefault(_v)); }
 
     }
@@ -99,6 +107,7 @@ public sealed partial class GameEvent : Luban.BeanBase
         + "name:" + Name + ","
         + "desc:" + Desc + ","
         + "type:" + Type + ","
+        + "effectId:" + EffectId + ","
         + "preCourseIds:" + Luban.StringUtil.CollectionToString(PreCourseIds) + ","
         + "needItemIds:" + Luban.StringUtil.CollectionToString(NeedItemIds) + ","
         + "wasteTime:" + WasteTime + ","

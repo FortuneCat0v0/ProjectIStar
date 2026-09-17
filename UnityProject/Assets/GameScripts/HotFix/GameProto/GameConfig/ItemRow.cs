@@ -10,11 +10,11 @@
 using Luban;
 
 
-namespace GameConfig.item
+namespace GameConfig
 {
-public sealed partial class Item : Luban.BeanBase
+public sealed partial class ItemRow : Luban.BeanBase
 {
-    public Item(ByteBuf _buf) 
+    public ItemRow(ByteBuf _buf) 
     {
         Id = _buf.ReadInt();
         Name = _buf.ReadString();
@@ -29,9 +29,9 @@ public sealed partial class Item : Luban.BeanBase
         ExchangeColumn = global::GameConfig.item.ItemExchange.DeserializeItemExchange(_buf);
     }
 
-    public static Item DeserializeItem(ByteBuf _buf)
+    public static ItemRow DeserializeItemRow(ByteBuf _buf)
     {
-        return new item.Item(_buf);
+        return new ItemRow(_buf);
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ public sealed partial class Item : Luban.BeanBase
     /// 引用当前表
     /// </summary>
     public readonly int UpgradeToItemId;
-    public item.Item UpgradeToItemId_Ref;
+    public ItemRow UpgradeToItemId_Ref;
     /// <summary>
     /// 过期时间
     /// </summary>
@@ -73,7 +73,7 @@ public sealed partial class Item : Luban.BeanBase
     /// </summary>
     public readonly item.ItemExchange ExchangeColumn;
    
-    public const int __ID__ = 2107285806;
+    public const int __ID__ = -514121305;
     public override int GetTypeId() => __ID__;
 
     public  void ResolveRef(Tables tables)

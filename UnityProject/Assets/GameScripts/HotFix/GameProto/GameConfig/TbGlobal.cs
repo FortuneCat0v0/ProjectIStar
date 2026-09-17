@@ -10,20 +10,20 @@
 using Luban;
 
 
-namespace GameConfig.global
+namespace GameConfig
 {
 public partial class TbGlobal
 {
 
-     private readonly global.Global _data;
+     private readonly GlobalRow _data;
 
-     public global.Global Data => _data;
+     public GlobalRow Data => _data;
 
     public TbGlobal(ByteBuf _buf)
     {
         int n = _buf.ReadSize();
         if (n != 1) throw new SerializationException("table mode=one, but size != 1");
-        _data = global::GameConfig.global.Global.DeserializeGlobal(_buf);
+        _data = global::GameConfig.GlobalRow.DeserializeGlobalRow(_buf);
     }
 
 

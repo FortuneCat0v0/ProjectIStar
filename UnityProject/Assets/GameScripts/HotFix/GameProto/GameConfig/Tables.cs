@@ -13,21 +13,24 @@ namespace GameConfig
 {
 public partial class Tables
 {
-    public game_event.TbGameEvent TbGameEvent {get; }
-    public global.TbGlobal TbGlobal {get; }
-    public item.TbItem TbItem {get; }
+    public TbEffect TbEffect {get; }
+    public TbEvent TbEvent {get; }
+    public TbGlobal TbGlobal {get; }
+    public TbItem TbItem {get; }
 
     public Tables(System.Func<string, ByteBuf> loader)
     {
-        TbGameEvent = new game_event.TbGameEvent(loader("game_event_tbgameevent"));
-        TbGlobal = new global.TbGlobal(loader("global_tbglobal"));
-        TbItem = new item.TbItem(loader("item_tbitem"));
+        TbEffect = new TbEffect(loader("tbeffect"));
+        TbEvent = new TbEvent(loader("tbevent"));
+        TbGlobal = new TbGlobal(loader("tbglobal"));
+        TbItem = new TbItem(loader("tbitem"));
         ResolveRef();
     }
     
     private void ResolveRef()
     {
-        TbGameEvent.ResolveRef(this);
+        TbEffect.ResolveRef(this);
+        TbEvent.ResolveRef(this);
         TbGlobal.ResolveRef(this);
         TbItem.ResolveRef(this);
     }

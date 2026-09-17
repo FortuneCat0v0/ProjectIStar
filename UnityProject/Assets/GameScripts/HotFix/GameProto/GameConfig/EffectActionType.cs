@@ -12,20 +12,16 @@
 namespace GameConfig
 { 
     /// <summary>
-    /// 游戏事件类型
+    /// 效果行为类型
     /// </summary>
     [System.Flags]
-    public enum GameEventType
+    public enum EffectActionType
     {
         None = 0,
         /// <summary>
-        /// 课程
-        /// </summary>
-        Course = 1,
-        /// <summary>
         /// 对话
         /// </summary>
-        Dialogue = 2,
+        Dialogue = 1,
     }
 
 } 
