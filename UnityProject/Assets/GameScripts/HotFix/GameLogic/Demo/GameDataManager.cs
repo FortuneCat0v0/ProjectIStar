@@ -74,8 +74,7 @@ public sealed class GameDataManager : Singleton<GameDataManager>
     // 金钱
     public int Money { get => _money; set => SetValue(ref _money, value); }
     
-    public CharacterData SisterData1 { get; set; }
-    public CharacterData SisterData2 { get; set; }
+    public List<CharacterData> CharacterDataList = new();
 
     protected override void OnInit()
     {
@@ -108,9 +107,15 @@ public sealed class GameDataManager : Singleton<GameDataManager>
         _money = 100;
         _day = 1;
         _time = 7 * 60;
-        SisterData1 = new CharacterData();
-        SisterData1.Name = "NPC1";
-        SisterData2 = new CharacterData();
-        SisterData2.Name = "NPC2";
+        CharacterData characterData1 = new CharacterData();
+        characterData1.Name = "张三";
+        CharacterData characterData2 = new CharacterData();
+        characterData2.Name = "李四";
+        CharacterData characterData3 = new CharacterData();
+        characterData3.Name = "王五";
+        CharacterDataList.Clear();
+        CharacterDataList.Add(characterData1);
+        CharacterDataList.Add(characterData2);
+        CharacterDataList.Add(characterData3);
     }
 }

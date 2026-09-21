@@ -22,12 +22,8 @@ namespace GameLogic
 		private TextMeshProUGUI m_tmpStamina = null!;
 		private TextMeshProUGUI m_tmpStress = null!;
 		private TextMeshProUGUI m_tmpMoney = null!;
-		private TextMeshProUGUI m_tmpSister1Name = null!;
-		private TextMeshProUGUI m_tmpSister1Affection = null!;
-		private TextMeshProUGUI m_tmpSister1Trust = null!;
-		private TextMeshProUGUI m_tmpSister2Name = null!;
-		private TextMeshProUGUI m_tmpSister2Affection = null!;
-		private TextMeshProUGUI m_tmpSister2Trust = null!;
+		private Transform m_tfCharacterData = null!;
+		private GameObject m_itemCharacterData = null!;
 		private Button m_btnTest = null!;
 
 		protected override void ScriptGenerator()
@@ -43,13 +39,9 @@ namespace GameLogic
 			m_tmpStamina = m_bindComponent.GetComponent<TextMeshProUGUI>(2);
 			m_tmpStress = m_bindComponent.GetComponent<TextMeshProUGUI>(3);
 			m_tmpMoney = m_bindComponent.GetComponent<TextMeshProUGUI>(4);
-			m_tmpSister1Name = m_bindComponent.GetComponent<TextMeshProUGUI>(5);
-			m_tmpSister1Affection = m_bindComponent.GetComponent<TextMeshProUGUI>(6);
-			m_tmpSister1Trust = m_bindComponent.GetComponent<TextMeshProUGUI>(7);
-			m_tmpSister2Name = m_bindComponent.GetComponent<TextMeshProUGUI>(8);
-			m_tmpSister2Affection = m_bindComponent.GetComponent<TextMeshProUGUI>(9);
-			m_tmpSister2Trust = m_bindComponent.GetComponent<TextMeshProUGUI>(10);
-			m_btnTest = m_bindComponent.GetComponent<Button>(11);
+			m_tfCharacterData = m_bindComponent.GetComponent<Transform>(5);
+			m_itemCharacterData = m_bindComponent.GetComponent<RectTransform>(6).gameObject;
+			m_btnTest = m_bindComponent.GetComponent<Button>(7);
 			m_btnTest.onClick.RemoveAllListeners();
 			m_btnTest.onClick.AddListener(OnClickTestBtn);
 		}

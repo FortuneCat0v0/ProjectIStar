@@ -1,16 +1,21 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+using System.Collections.Generic;
 using TEngine;
-using TMPro;
 
 namespace GameLogic
 {
     [Window(UILayer.UI)]
     public partial class MainUI
     {
+        private readonly List<MainCharacterDataWidget> _characterDataWidgets = new();
+
         protected override void RegisterEvent()
         {
             AddUIEvent(IGameDataEvent_Event.DataChanged, RefreshData);
+        }
+
+        protected override void OnCreate()
+        {
+            m_itemCharacterData.SetActive(false);
         }
 
         protected override void OnRefresh()
@@ -32,15 +37,18 @@ namespace GameLogic
             m_tmpStress.text = $"压力：{dataManager.Stress}/{ConfigSystem.Instance.Tables.TbGlobal.MaxStress}";
             m_tmpMoney.text = $"金钱：{dataManager.Money}";
 
-            RefreshCharacterData(dataManager.SisterData1, m_tmpSister1Name, m_tmpSister1Affection, m_tmpSister1Trust);
-            RefreshCharacterData(dataManager.SisterData2, m_tmpSister2Name, m_tmpSister2Affection, m_tmpSister2Trust);
+            RefreshCharacterDataList(dataManager.CharacterDataList);
         }
 
-        private static void RefreshCharacterData(CharacterData characterData, TextMeshProUGUI nameText, TextMeshProUGUI affectionText, TextMeshProUGUI trustText)
+        private void RefreshCharacterDataList(IReadOnlyList<CharacterData> characterDataList)
         {
-            nameText.text = characterData.Name;
-            affectionText.text = $"好感度:{characterData.Affection}";
-            trustText.text = $"信任度:{characterData.Trust}";
+            int characterCount = characterDataList?.Count ?? 0;
+            AdjustIconNum(_characterDataWidgets, characterCount, m_tfCharacterData, m_itemCharacterData);
+
+            for (int i = 0; i < characterCount; i++)
+            {
+                _characterDataWidgets[i].SetData(characterDataList[i]);
+            }
         }
     }
 }
