@@ -17,7 +17,7 @@ public partial struct DialogueChoice
     public DialogueChoice(ByteBuf _buf) 
     {
         Text = _buf.ReadString();
-        NextId = _buf.ReadString();
+        Index = _buf.ReadInt();
     }
 
     public static DialogueChoice DeserializeDialogueChoice(ByteBuf _buf)
@@ -26,7 +26,7 @@ public partial struct DialogueChoice
     }
 
     public readonly string Text;
-    public readonly string NextId;
+    public readonly int Index;
    
 
     public  void ResolveRef(Tables tables)
@@ -37,7 +37,7 @@ public partial struct DialogueChoice
     {
         return "{ "
         + "Text:" + Text + ","
-        + "NextId:" + NextId + ","
+        + "Index:" + Index + ","
         + "}";
     }
 }

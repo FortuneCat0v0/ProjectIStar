@@ -12,20 +12,23 @@
 namespace GameConfig
 { 
     /// <summary>
-    /// 游戏事件类型
+    /// 游戏逻辑节点类型
     /// </summary>
-    [System.Flags]
-    public enum GameEventType
+    public enum GameplayNodeType
     {
-        None = 0,
+        Root = 0,
         /// <summary>
-        /// 课程
+        /// 播放对话
         /// </summary>
-        Course = 1,
+        Dialogue = 1,
         /// <summary>
-        /// 对话
+        /// 显示选项
         /// </summary>
-        Dialogue = 2,
+        Choice = 2,
+        /// <summary>
+        /// 结束
+        /// </summary>
+        End = 100,
     }
 
 } 

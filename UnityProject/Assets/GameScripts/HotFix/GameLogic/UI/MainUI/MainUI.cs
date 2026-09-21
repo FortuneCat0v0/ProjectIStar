@@ -20,7 +20,7 @@ namespace GameLogic
 
         private partial void OnClickTestBtn()
         {
-            DialogueManager.Instance.EnterDialogue("10002");
+            GameplayManager.Instance.EnterGraph(10001);
         }
 
         private void RefreshData()

@@ -13,15 +13,17 @@ namespace GameConfig
 {
 public partial class Tables
 {
-    public TbDialogue TbDialogue {get; }
-    public TbEvent TbEvent {get; }
+    public TbGameplayGraph TbGameplayGraph {get; }
+    public TbGameplayNode TbGameplayNode {get; }
+    public TbGameplayGraphTrigger TbGameplayGraphTrigger {get; }
     public TbGlobal TbGlobal {get; }
     public TbItem TbItem {get; }
 
     public Tables(System.Func<string, ByteBuf> loader)
     {
-        TbDialogue = new TbDialogue(loader("tbdialogue"));
-        TbEvent = new TbEvent(loader("tbevent"));
+        TbGameplayGraph = new TbGameplayGraph(loader("tbgameplaygraph"));
+        TbGameplayNode = new TbGameplayNode(loader("tbgameplaynode"));
+        TbGameplayGraphTrigger = new TbGameplayGraphTrigger(loader("tbgameplaygraphtrigger"));
         TbGlobal = new TbGlobal(loader("tbglobal"));
         TbItem = new TbItem(loader("tbitem"));
         ResolveRef();
@@ -29,8 +31,9 @@ public partial class Tables
     
     private void ResolveRef()
     {
-        TbDialogue.ResolveRef(this);
-        TbEvent.ResolveRef(this);
+        TbGameplayGraph.ResolveRef(this);
+        TbGameplayNode.ResolveRef(this);
+        TbGameplayGraphTrigger.ResolveRef(this);
         TbGlobal.ResolveRef(this);
         TbItem.ResolveRef(this);
     }

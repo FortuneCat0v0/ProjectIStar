@@ -43,25 +43,22 @@
             <option name="constructor" value="ExternalTypeUtil.NewVector3" />
         </mapper>
     </bean>
-    <enum name="GameEventType" comment="游戏事件类型" unique="TRUE" flags="TRUE">
-        <var name="None" alias="" value="0"/>
-        <var name="Course" alias="课程" value="1"/>
-        <var name="Dialogue" alias="对话" value="2"/>
-    </enum>
-    <enum name="DialogueType" comment="对话类型" unique="TRUE" flags="TRUE">
-        <var name="Line" alias="" value="0"/>
-        <var name="Choice" alias="" value="1"/>
-        <var name="Condition" alias="" value="2"/>
-        <var name="Command" alias="" value="3"/>
-        <var name="Jump" alias="" value="4"/>
-        <var name="End" alias="" value="5"/>
-    </enum>
     <bean name="DialogueChoice" valueType="1" sep=";">
         <var name="Text" type="string"/>
-        <var name="NextId" type="string"/>
+        <var name="Index" type="int"/>
     </bean>
-    <bean name="DialogueParameter" valueType="1" sep=";">
-        <var name="Key" type="string"/>
-        <var name="Value" type="string"/>
-    </bean>
+    <enum name="GameplayNodeType" comment="游戏逻辑节点类型" unique="TRUE" flags="FALSE">
+        <var name="Root" alias="" value="0"/>
+        <var name="Dialogue" alias="播放对话" value="1"/>
+        <var name="Choice" alias="显示选项" value="2"/>
+        <var name="End" alias="结束" value="100"/>
+    </enum>
+    <enum name="GameplayGraphTriggerType" comment="游戏逻辑图触发事件类型" unique="TRUE" flags="FALSE">
+        <var name="Custom" alias="自定义事件" value="0"/>
+        <var name="ItemPurchased" alias="购买道具" value="1"/>
+        <var name="MonsterDefeated" alias="击败怪物" value="2"/>
+        <var name="NpcInteracted" alias="与NPC交互" value="3"/>
+        <var name="AreaEntered" alias="进入区域" value="4"/>
+        <var name="QuestStateChanged" alias="任务状态变化" value="5"/>
+    </enum>
 </module>
