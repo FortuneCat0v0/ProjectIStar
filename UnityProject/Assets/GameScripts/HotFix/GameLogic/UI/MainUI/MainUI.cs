@@ -23,6 +23,11 @@ namespace GameLogic
             RefreshData();
         }
 
+        private partial void OnClickMapBtn()
+        {
+            GameModule.UI.ShowUI<MapUI>();
+        }
+
         private partial void OnClickTestBtn()
         {
             GameplayManager.Instance.EnterGraph(10001);

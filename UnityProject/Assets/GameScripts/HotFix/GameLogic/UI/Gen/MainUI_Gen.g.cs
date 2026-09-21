@@ -24,6 +24,7 @@ namespace GameLogic
 		private TextMeshProUGUI m_tmpMoney = null!;
 		private Transform m_tfCharacterData = null!;
 		private GameObject m_itemCharacterData = null!;
+		private Button m_btnMap = null!;
 		private Button m_btnTest = null!;
 
 		protected override void ScriptGenerator()
@@ -41,7 +42,10 @@ namespace GameLogic
 			m_tmpMoney = m_bindComponent.GetComponent<TextMeshProUGUI>(4);
 			m_tfCharacterData = m_bindComponent.GetComponent<Transform>(5);
 			m_itemCharacterData = m_bindComponent.GetComponent<RectTransform>(6).gameObject;
-			m_btnTest = m_bindComponent.GetComponent<Button>(7);
+			m_btnMap = m_bindComponent.GetComponent<Button>(7);
+			m_btnTest = m_bindComponent.GetComponent<Button>(8);
+			m_btnMap.onClick.RemoveAllListeners();
+			m_btnMap.onClick.AddListener(OnClickMapBtn);
 			m_btnTest.onClick.RemoveAllListeners();
 			m_btnTest.onClick.AddListener(OnClickTestBtn);
 		}
@@ -49,6 +53,8 @@ namespace GameLogic
 		#endregion
 
 		#region 事件
+
+		private partial void OnClickMapBtn();
 
 		private partial void OnClickTestBtn();
 
