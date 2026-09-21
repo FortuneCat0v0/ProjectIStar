@@ -6,6 +6,8 @@ using GameLogic;
 using Obfuz;
 #endif
 using TEngine;
+using UnityEngine;
+
 #pragma warning disable CS0436
 
 
@@ -36,7 +38,20 @@ public partial class GameApp
     
     private static async UniTask StartGameLogic()
     {
+        GameModule.UI.Active();
+        
         // GameEvent.Get<ILoginUI>().ShowLoginUI();
+        await GameModule.Scene.LoadSceneAsync("Classroom");
+        int index = 0;
+        foreach (var item in GameDataManager.Instance.CharacterDataList)
+        {
+            GameObject character = await GameModule.Resource.LoadGameObjectAsync("Character");
+            character.name = item.Name;
+
+            character.transform.position = new Vector2(index, 0);
+            index++;
+        }
+        
         GameModule.UI.ShowUIAsync<MainUI>();
     }
     
