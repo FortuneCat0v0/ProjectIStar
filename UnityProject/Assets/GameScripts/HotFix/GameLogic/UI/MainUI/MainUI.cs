@@ -30,7 +30,7 @@ namespace GameLogic
 
         private partial void OnClickNextDayBtn()
         {
-            GameDataManager.Instance.Day++;
+            GameModule.UI.ShowUI<FadeUI>();
         }
 
         private partial void OnClickTestBtn()
