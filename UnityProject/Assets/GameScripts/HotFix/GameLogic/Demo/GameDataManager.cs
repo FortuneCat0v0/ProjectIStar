@@ -43,6 +43,11 @@ public class CharacterData
     public int Stress;
 }
 
+public class ItemData
+{
+    public int itemId;
+}
+
 /// <summary>
 /// 记录当前游戏进程中的公共数据。
 /// </summary>
@@ -60,6 +65,7 @@ public sealed class GameDataManager : Singleton<GameDataManager>
     public int Stamina { get => _stamina; set => SetValue(ref _stamina, value); }
     
     public List<CharacterData> CharacterDataList = new();
+    public List<ItemData> ItemDataList = new();
 
     protected override void OnInit()
     {
@@ -103,5 +109,14 @@ public sealed class GameDataManager : Singleton<GameDataManager>
         CharacterDataList.Add(characterData1);
         CharacterDataList.Add(characterData2);
         CharacterDataList.Add(characterData3);
+
+        ItemDataList.Clear();
+        for (int i = 0; i < 5; i++)
+        {
+            ItemData itemData = new ItemData();
+            itemData.itemId = 10001;
+
+            ItemDataList.Add(itemData);
+        }
     }
 }
