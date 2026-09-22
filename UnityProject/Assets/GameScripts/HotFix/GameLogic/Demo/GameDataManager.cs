@@ -36,20 +36,11 @@ public class CharacterData
         }
     }
 
-    // -----先不用-----
-    // 体魄
-    public int Physique;
-    // 智力
-    public int Intelligence;
-    // 情感
-    public int Sensitivity;
-    // 想象力
-    public int Imagination;
-    
-    // 可以学习的课程
-    public List<CourseData> AvailableCourses = new();
-    // 已学完的课程
-    public List<CourseData> CompletedCourses = new();
+    // 饱腹
+    public int Satiety;
+
+    // 压力
+    public int Stress;
 }
 
 /// <summary>
@@ -60,8 +51,6 @@ public sealed class GameDataManager : Singleton<GameDataManager>
     private int _day;
     private int _time;
     private int _stamina;
-    private int _stress;
-    private int _money;
 
     // 当前天数
     public int Day { get => _day; set => SetValue(ref _day, value); }
@@ -69,10 +58,6 @@ public sealed class GameDataManager : Singleton<GameDataManager>
     public int Time { get => _time; set => SetValue(ref _time, value); }
     // 体力
     public int Stamina { get => _stamina; set => SetValue(ref _stamina, value); }
-    // 压力
-    public int Stress { get => _stress; set => SetValue(ref _stress, value); }
-    // 金钱
-    public int Money { get => _money; set => SetValue(ref _money, value); }
     
     public List<CharacterData> CharacterDataList = new();
 
@@ -102,17 +87,18 @@ public sealed class GameDataManager : Singleton<GameDataManager>
     /// </summary>
     public void Reset()
     {
-        _stamina = ConfigSystem.Instance.Tables.TbGlobal.MaxStress;
-        _stress = 0;
-        _money = 100;
         _day = 1;
         _time = 7 * 60;
+        _stamina = 7;
         CharacterData characterData1 = new CharacterData();
-        characterData1.Name = "张三";
+        characterData1.Name = "我";
+        characterData1.Satiety = 7;
         CharacterData characterData2 = new CharacterData();
-        characterData2.Name = "李四";
+        characterData2.Name = "张三";
+        characterData2.Satiety = 7;
         CharacterData characterData3 = new CharacterData();
-        characterData3.Name = "王五";
+        characterData3.Name = "李四";
+        characterData3.Satiety = 7;
         CharacterDataList.Clear();
         CharacterDataList.Add(characterData1);
         CharacterDataList.Add(characterData2);

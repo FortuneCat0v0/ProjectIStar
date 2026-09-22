@@ -28,6 +28,11 @@ namespace GameLogic
             GameModule.UI.ShowUI<MapUI>();
         }
 
+        private partial void OnClickNextDayBtn()
+        {
+            GameDataManager.Instance.Day++;
+        }
+
         private partial void OnClickTestBtn()
         {
             GameplayManager.Instance.EnterGraph(10001);
@@ -39,8 +44,6 @@ namespace GameLogic
             m_tmpDay.text = $"天数：{dataManager.Day}";
             m_tmpTime.text = $"时间：{dataManager.Time / 60}:{dataManager.Time % 60:00}";
             m_tmpStamina.text = $"体力：{dataManager.Stamina}/{ConfigSystem.Instance.Tables.TbGlobal.MaxStamina}";
-            m_tmpStress.text = $"压力：{dataManager.Stress}/{ConfigSystem.Instance.Tables.TbGlobal.MaxStress}";
-            m_tmpMoney.text = $"金钱：{dataManager.Money}";
 
             RefreshCharacterDataList(dataManager.CharacterDataList);
         }

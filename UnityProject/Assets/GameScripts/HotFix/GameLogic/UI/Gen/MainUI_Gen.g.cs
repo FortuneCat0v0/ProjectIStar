@@ -20,11 +20,10 @@ namespace GameLogic
 		private TextMeshProUGUI m_tmpDay = null!;
 		private TextMeshProUGUI m_tmpTime = null!;
 		private TextMeshProUGUI m_tmpStamina = null!;
-		private TextMeshProUGUI m_tmpStress = null!;
-		private TextMeshProUGUI m_tmpMoney = null!;
 		private Transform m_tfCharacterData = null!;
 		private GameObject m_itemCharacterData = null!;
 		private Button m_btnMap = null!;
+		private Button m_btnNextDay = null!;
 		private Button m_btnTest = null!;
 
 		protected override void ScriptGenerator()
@@ -38,14 +37,15 @@ namespace GameLogic
 			m_tmpDay = m_bindComponent.GetComponent<TextMeshProUGUI>(0);
 			m_tmpTime = m_bindComponent.GetComponent<TextMeshProUGUI>(1);
 			m_tmpStamina = m_bindComponent.GetComponent<TextMeshProUGUI>(2);
-			m_tmpStress = m_bindComponent.GetComponent<TextMeshProUGUI>(3);
-			m_tmpMoney = m_bindComponent.GetComponent<TextMeshProUGUI>(4);
-			m_tfCharacterData = m_bindComponent.GetComponent<Transform>(5);
-			m_itemCharacterData = m_bindComponent.GetComponent<RectTransform>(6).gameObject;
-			m_btnMap = m_bindComponent.GetComponent<Button>(7);
-			m_btnTest = m_bindComponent.GetComponent<Button>(8);
+			m_tfCharacterData = m_bindComponent.GetComponent<Transform>(3);
+			m_itemCharacterData = m_bindComponent.GetComponent<RectTransform>(4).gameObject;
+			m_btnMap = m_bindComponent.GetComponent<Button>(5);
+			m_btnNextDay = m_bindComponent.GetComponent<Button>(6);
+			m_btnTest = m_bindComponent.GetComponent<Button>(7);
 			m_btnMap.onClick.RemoveAllListeners();
 			m_btnMap.onClick.AddListener(OnClickMapBtn);
+			m_btnNextDay.onClick.RemoveAllListeners();
+			m_btnNextDay.onClick.AddListener(OnClickNextDayBtn);
 			m_btnTest.onClick.RemoveAllListeners();
 			m_btnTest.onClick.AddListener(OnClickTestBtn);
 		}
@@ -55,6 +55,8 @@ namespace GameLogic
 		#region 事件
 
 		private partial void OnClickMapBtn();
+
+		private partial void OnClickNextDayBtn();
 
 		private partial void OnClickTestBtn();
 

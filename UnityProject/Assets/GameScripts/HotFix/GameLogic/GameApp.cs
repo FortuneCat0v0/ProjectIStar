@@ -41,7 +41,7 @@ public partial class GameApp
         GameModule.UI.Active();
         
         // GameEvent.Get<ILoginUI>().ShowLoginUI();
-        await GameModule.Scene.LoadSceneAsync("Classroom");
+        await GameModule.Scene.LoadSceneAsync("House");
         int index = 0;
         foreach (var item in GameDataManager.Instance.CharacterDataList)
         {
