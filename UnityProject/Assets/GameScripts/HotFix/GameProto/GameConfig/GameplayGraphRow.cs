@@ -20,6 +20,8 @@ public sealed partial class GameplayGraphRow : Luban.BeanBase
         Name = _buf.ReadString();
         Desc = _buf.ReadString();
         RootNodeId = _buf.ReadString();
+        TriggerDay = _buf.ReadBool();
+        TriggerDayParam = _buf.ReadInt();
     }
 
     public static GameplayGraphRow DeserializeGameplayGraphRow(ByteBuf _buf)
@@ -43,6 +45,8 @@ public sealed partial class GameplayGraphRow : Luban.BeanBase
     /// 入口节点ID
     /// </summary>
     public readonly string RootNodeId;
+    public readonly bool TriggerDay;
+    public readonly int TriggerDayParam;
    
     public const int __ID__ = -1124923886;
     public override int GetTypeId() => __ID__;
@@ -58,6 +62,8 @@ public sealed partial class GameplayGraphRow : Luban.BeanBase
         + "name:" + Name + ","
         + "desc:" + Desc + ","
         + "rootNodeId:" + RootNodeId + ","
+        + "triggerDay:" + TriggerDay + ","
+        + "triggerDayParam:" + TriggerDayParam + ","
         + "}";
     }
 }

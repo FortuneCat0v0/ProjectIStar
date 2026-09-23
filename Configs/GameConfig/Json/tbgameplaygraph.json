@@ -1,8 +1,26 @@
 [
   {
-    "id": 10001,
-    "name": "点击互动",
+    "id": 10000,
+    "name": "测试对话",
     "desc": "",
-    "root_node_id": "10001"
+    "root_node_id": "10000",
+    "trigger_day": false,
+    "trigger_day_param": 0
+  },
+  {
+    "id": 10001,
+    "name": "第1天",
+    "desc": "",
+    "root_node_id": "10001",
+    "trigger_day": true,
+    "trigger_day_param": 1
+  },
+  {
+    "id": 10002,
+    "name": "第2天",
+    "desc": "",
+    "root_node_id": "10002",
+    "trigger_day": true,
+    "trigger_day_param": 2
   }
 ]

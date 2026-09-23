@@ -1,59 +1,59 @@
 [
   {
-    "id": "10001",
-    "graph_id": 10001,
+    "id": "10000",
+    "graph_id": 10000,
     "desc": "",
     "type": 0,
     "next_id": [
-      "10001_dia_你想吃什么"
+      "10000_dia_你想吃什么"
     ],
     "dialogue_speaker": "",
     "dialogue_text": "",
     "dialogue_choices": []
   },
   {
-    "id": "10001_dia_你想吃什么",
-    "graph_id": 10001,
+    "id": "10000_dia_你想吃什么",
+    "graph_id": 10000,
     "desc": "",
     "type": 1,
     "next_id": [
-      "10001_dia_都可以"
+      "10000_dia_都可以"
     ],
     "dialogue_speaker": "张三",
     "dialogue_text": "你想吃什么",
     "dialogue_choices": []
   },
   {
-    "id": "10001_dia_都可以",
-    "graph_id": 10001,
+    "id": "10000_dia_都可以",
+    "graph_id": 10000,
     "desc": "",
     "type": 1,
     "next_id": [
-      "10001_dia_汉堡和麻辣烫选一个"
+      "10000_dia_汉堡和麻辣烫选一个"
     ],
     "dialogue_speaker": "我",
     "dialogue_text": "都可以",
     "dialogue_choices": []
   },
   {
-    "id": "10001_dia_汉堡和麻辣烫选一个",
-    "graph_id": 10001,
+    "id": "10000_dia_汉堡和麻辣烫选一个",
+    "graph_id": 10000,
     "desc": "",
     "type": 1,
     "next_id": [
-      "10001_choice_汉堡和麻辣烫"
+      "10000_choice_汉堡和麻辣烫"
     ],
     "dialogue_speaker": "张三",
     "dialogue_text": "汉堡和麻辣烫选一个",
     "dialogue_choices": []
   },
   {
-    "id": "10001_choice_汉堡和麻辣烫",
-    "graph_id": 10001,
+    "id": "10000_choice_汉堡和麻辣烫",
+    "graph_id": 10000,
     "desc": "",
     "type": 2,
     "next_id": [
-      "10001_dia_汉堡太贵了",
+      "10000_dia_汉堡太贵了",
       "10001_dia_那就麻辣烫呗"
     ],
     "dialogue_speaker": "",
@@ -70,56 +70,124 @@
     ]
   },
   {
-    "id": "10001_dia_汉堡太贵了",
-    "graph_id": 10001,
+    "id": "10000_dia_汉堡太贵了",
+    "graph_id": 10000,
     "desc": "",
     "type": 1,
     "next_id": [
-      "10001_dia_那就麻辣烫呗"
+      "10000_dia_那就麻辣烫呗"
     ],
     "dialogue_speaker": "张三",
     "dialogue_text": "汉堡太贵了",
     "dialogue_choices": []
   },
   {
-    "id": "10001_dia_那就麻辣烫呗",
-    "graph_id": 10001,
+    "id": "10000_dia_那就麻辣烫呗",
+    "graph_id": 10000,
     "desc": "",
     "type": 1,
     "next_id": [
-      "10001_dia_GOGO"
+      "10000_dia_GOGO"
     ],
     "dialogue_speaker": "我",
     "dialogue_text": "那就麻辣烫呗",
     "dialogue_choices": []
   },
   {
-    "id": "10001_dia_GOGO",
-    "graph_id": 10001,
+    "id": "10000_dia_GOGO",
+    "graph_id": 10000,
     "desc": "",
     "type": 1,
     "next_id": [
-      "10001_end"
+      "10000_end"
     ],
     "dialogue_speaker": "张三",
     "dialogue_text": "GOGO",
     "dialogue_choices": []
   },
   {
-    "id": "10001_dia_我也这么觉得",
-    "graph_id": 10001,
+    "id": "10000_dia_我也这么觉得",
+    "graph_id": 10000,
     "desc": "",
     "type": 1,
     "next_id": [
-      "10001_end"
+      "10000_end"
     ],
     "dialogue_speaker": "张三",
     "dialogue_text": "我也这么觉得，GOGO",
     "dialogue_choices": []
   },
   {
+    "id": "10000_end",
+    "graph_id": 10000,
+    "desc": "",
+    "type": 100,
+    "next_id": [],
+    "dialogue_speaker": "",
+    "dialogue_text": "",
+    "dialogue_choices": []
+  },
+  {
+    "id": "10001",
+    "graph_id": 10001,
+    "desc": "",
+    "type": 0,
+    "next_id": [
+      "10001_dia_第一天"
+    ],
+    "dialogue_speaker": "",
+    "dialogue_text": "",
+    "dialogue_choices": []
+  },
+  {
+    "id": "10001_dia_第一天",
+    "graph_id": 10001,
+    "desc": "",
+    "type": 1,
+    "next_id": [
+      "10001_end"
+    ],
+    "dialogue_speaker": "",
+    "dialogue_text": "第一天，无事",
+    "dialogue_choices": []
+  },
+  {
     "id": "10001_end",
     "graph_id": 10001,
+    "desc": "",
+    "type": 100,
+    "next_id": [],
+    "dialogue_speaker": "",
+    "dialogue_text": "",
+    "dialogue_choices": []
+  },
+  {
+    "id": "10002",
+    "graph_id": 10002,
+    "desc": "",
+    "type": 0,
+    "next_id": [
+      "10002_dia_第二天"
+    ],
+    "dialogue_speaker": "",
+    "dialogue_text": "",
+    "dialogue_choices": []
+  },
+  {
+    "id": "10002_dia_第二天",
+    "graph_id": 10002,
+    "desc": "",
+    "type": 1,
+    "next_id": [
+      "10002_end"
+    ],
+    "dialogue_speaker": "",
+    "dialogue_text": "第二天，无事",
+    "dialogue_choices": []
+  },
+  {
+    "id": "10002_end",
+    "graph_id": 10002,
     "desc": "",
     "type": 100,
     "next_id": [],

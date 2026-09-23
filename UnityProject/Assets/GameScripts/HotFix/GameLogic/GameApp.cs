@@ -43,16 +43,6 @@ public partial class GameApp
         // GameEvent.Get<ILoginUI>().ShowLoginUI();
         await GameModule.Scene.LoadSceneAsync("House");
 
-        GameObject canList = GameObject.Find("CanList");
-        if (canList == null)
-        {
-            Log.Error("House scene is missing the CanList object.");
-        }
-        else if (canList.GetComponent<ItemModelList>() == null)
-        {
-            canList.AddComponent<ItemModelList>();
-        }
-
         int index = 0;
         foreach (var item in GameDataManager.Instance.CharacterDataList)
         {
@@ -64,6 +54,8 @@ public partial class GameApp
         }
         
         GameModule.UI.ShowUIAsync<MainUI>();
+        
+        GameplayManager.Instance.TriggerDay(GameDataManager.Instance.Day);
     }
     
     private static void Release()

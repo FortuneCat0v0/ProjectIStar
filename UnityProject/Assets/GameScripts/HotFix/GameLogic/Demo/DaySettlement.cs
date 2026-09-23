@@ -27,5 +27,6 @@ public static class DaySettlement
         }
         
         GameEvent.EventMgr.GetInterface<IGameDataEvent>().DataChanged();
+        GameplayManager.Instance.TriggerDay(GameDataManager.Instance.Day);
     }
 }

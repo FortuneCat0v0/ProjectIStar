@@ -19,6 +19,17 @@ namespace GameLogic
             }
         }
 
+        public void TriggerDay(int day)
+        {
+            foreach (GameplayGraphRow gameplayGraphRow in ConfigSystem.Instance.Tables.TbGameplayGraph.DataList)
+            {
+                if (gameplayGraphRow.TriggerDay && gameplayGraphRow.TriggerDayParam == day)
+                {
+                    EnterGraph(gameplayGraphRow.Id);
+                }
+            }
+        }
+        
         public void EnterGraph(int id)
         {
             if (CurrentGraphId != 0)
