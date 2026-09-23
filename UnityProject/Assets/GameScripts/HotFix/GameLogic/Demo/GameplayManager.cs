@@ -11,6 +11,8 @@ namespace GameLogic
         private string CurrentNodeId;
         private GameplayNodeBase CurrentNode;
 
+        public bool IsDialogueActive => CurrentNode is DialogueNode || CurrentNode is ChoiceNode;
+
         private void Update()
         {
             if (CurrentNode != null)

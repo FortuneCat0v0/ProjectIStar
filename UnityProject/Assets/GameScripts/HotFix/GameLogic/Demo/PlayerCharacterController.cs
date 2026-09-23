@@ -16,6 +16,8 @@ namespace GameLogic
         private static readonly int YHash = Animator.StringToHash("Y");
         private static readonly int VelocityHash = Animator.StringToHash("Velocity");
 
+        private static bool IsDialogueActive => GameplayManager.Instance.IsDialogueActive;
+
         private void Awake()
         {
             body = GetComponent<Rigidbody>();
@@ -27,7 +29,9 @@ namespace GameLogic
 
         private void Update()
         {
-            moveInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+            moveInput = IsDialogueActive
+                ? Vector2.zero
+                : new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
             if (moveInput.sqrMagnitude > 1f) moveInput.Normalize();
 
             if (moveInput.sqrMagnitude > 0f)
@@ -42,8 +46,9 @@ namespace GameLogic
         private void FixedUpdate()
         {
             Vector3 velocity = body.velocity;
-            velocity.x = moveInput.x * moveSpeed;
-            velocity.z = moveInput.y * moveSpeed;
+            Vector2 input = IsDialogueActive ? Vector2.zero : moveInput;
+            velocity.x = input.x * moveSpeed;
+            velocity.z = input.y * moveSpeed;
             body.velocity = velocity;
         }
 
