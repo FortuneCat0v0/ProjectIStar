@@ -20,6 +20,8 @@ namespace GameLogic
             }
 
             Log.Debug($"点击 {CharacterData.CharacterId}");
+            
+            GameplayManager.Instance.EnterGraph(20001);
         }
     }
 }

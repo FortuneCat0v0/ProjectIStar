@@ -22,5 +22,13 @@
     "root_node_id": "10002",
     "trigger_day": true,
     "trigger_day_param": 2
+  },
+  {
+    "id": 20001,
+    "name": "饿",
+    "desc": "",
+    "root_node_id": "20001",
+    "trigger_day": false,
+    "trigger_day_param": 0
   }
 ]

@@ -194,5 +194,39 @@
     "dialogue_speaker": "",
     "dialogue_text": "",
     "dialogue_choices": []
+  },
+  {
+    "id": "20001",
+    "graph_id": 20001,
+    "desc": "",
+    "type": 0,
+    "next_id": [
+      "20001_dia_饿"
+    ],
+    "dialogue_speaker": "",
+    "dialogue_text": "",
+    "dialogue_choices": []
+  },
+  {
+    "id": "20001_dia_饿",
+    "graph_id": 20001,
+    "desc": "",
+    "type": 1,
+    "next_id": [
+      "20001_end"
+    ],
+    "dialogue_speaker": "",
+    "dialogue_text": "老哥，好饿，什么时候吃饭",
+    "dialogue_choices": []
+  },
+  {
+    "id": "20001_end",
+    "graph_id": 20001,
+    "desc": "",
+    "type": 100,
+    "next_id": [],
+    "dialogue_speaker": "",
+    "dialogue_text": "",
+    "dialogue_choices": []
   }
 ]
