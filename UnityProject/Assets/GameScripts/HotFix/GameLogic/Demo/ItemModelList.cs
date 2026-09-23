@@ -64,36 +64,12 @@ namespace GameLogic
         private bool TryCreateView(ItemData itemData)
         {
             ItemRow itemRow = ConfigSystem.Instance.Tables.TbItem.GetOrDefault(itemId);
-            if (itemRow == null || string.IsNullOrWhiteSpace(itemRow.Actor))
-            {
-                Log.Error($"ItemModelList '{name}' cannot find a model address for item {itemId}.");
-                _loadFailed = true;
-                return false;
-            }
-
-            if (!GameModule.Resource.CheckLocationValid(itemRow.Actor))
-            {
-                Log.Error($"ItemModelList '{name}' model address '{itemRow.Actor}' is invalid.");
-                _loadFailed = true;
-                return false;
-            }
 
             GameObject instance = GameModule.Resource.LoadGameObject(itemRow.Actor, transform);
-            if (instance == null)
-            {
-                Log.Error($"ItemModelList '{name}' failed to load '{itemRow.Actor}'.");
-                _loadFailed = true;
-                return false;
-            }
 
             instance.name = $"{itemRow.Actor}_{_views.Count + 1}";
-            ItemWorldInteraction interaction = instance.GetComponent<ItemWorldInteraction>();
-            if (interaction == null)
-            {
-                interaction = instance.AddComponent<ItemWorldInteraction>();
-            }
-
-            interaction.Initialize(itemData);
+            ItemActor actor = instance.GetComponent<ItemActor>();
+            actor.Initialize(itemData);
             _views.Add(new ItemModelView(itemData, instance));
             return true;
         }
@@ -158,30 +134,6 @@ namespace GameLogic
 
             public ItemData ItemData { get; }
             public GameObject Instance { get; }
-        }
-    }
-
-    /// <summary>
-    /// 把带 Collider 的场景道具点击转发给独立交互界面。
-    /// </summary>
-    public sealed class ItemWorldInteraction : MonoBehaviour
-    {
-        private ItemData _itemData;
-
-        public void Initialize(ItemData itemData)
-        {
-            _itemData = itemData;
-        }
-
-        private void OnMouseDown()
-        {
-            if (_itemData == null ||
-                (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()))
-            {
-                return;
-            }
-
-            GameModule.UI.ShowUI<InteractionUI>(new ItemInteractionData(_itemData, transform.position));
         }
     }
 }

@@ -49,6 +49,7 @@ public partial class GameApp
             CharacterRow characterRow = ConfigSystem.Instance.Tables.TbCharacter.Get(characterData.CharacterId);
 
             GameObject character = await GameModule.Resource.LoadGameObjectAsync(characterRow.Actor);
+            character.GetComponent<CharacterActor>().Initialize(characterData);
 
             if (characterData.CharacterId == ConfigSystem.Instance.Tables.TbGlobal.CharacterIdMy)
             {

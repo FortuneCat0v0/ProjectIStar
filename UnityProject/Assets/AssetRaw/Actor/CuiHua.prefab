@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4435721195902555122}
   - component: {fileID: 7963534221161273551}
+  - component: {fileID: -4196720085575650832}
   m_Layer: 0
   m_Name: CuiHua
   m_TagString: Untagged
@@ -56,6 +57,18 @@ CapsuleCollider:
   m_Height: 0.85
   m_Direction: 1
   m_Center: {x: 0, y: 0.425, z: 0}
+--- !u!114 &-4196720085575650832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708293631629783232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 251504c96b1a4fe9b83e793e2d15c9c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3577030714644133600
 GameObject:
   m_ObjectHideFlags: 0
@@ -83,7 +96,7 @@ Transform:
   m_GameObject: {fileID: 3577030714644133600}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.05, z: -0.2}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
