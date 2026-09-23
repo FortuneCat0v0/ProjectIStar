@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using GameLogic;
 using TEngine;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace GameLogic
@@ -39,6 +40,15 @@ namespace GameLogic
         /// UI摄像机访问属性
         /// </summary>
         public Camera UICamera => _uiCamera;
+
+        /// <summary>
+        /// 判断鼠标指针是否位于 UI 上；没有 EventSystem 时返回 false。
+        /// </summary>
+        public bool IsPointerOverUI()
+        {
+            var eventSystem = EventSystem.current;
+            return eventSystem != null && eventSystem.IsPointerOverGameObject();
+        }
         
         /// <summary>
         /// 模块初始化（自动调用）。

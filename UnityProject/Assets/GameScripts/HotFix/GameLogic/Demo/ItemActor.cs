@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace GameLogic
 {
@@ -14,7 +13,7 @@ namespace GameLogic
 
         private void OnMouseDown()
         {
-            if (_itemData == null || (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()))
+            if (_itemData == null || GameModule.UI.IsPointerOverUI())
             {
                 return;
             }

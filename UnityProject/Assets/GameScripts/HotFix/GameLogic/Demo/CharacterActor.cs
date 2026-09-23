@@ -14,6 +14,11 @@ namespace GameLogic
 
         private void OnMouseDown()
         {
+            if (GameModule.UI.IsPointerOverUI())
+            {
+                return;
+            }
+
             Log.Debug($"点击 {CharacterData.CharacterId}");
         }
     }
