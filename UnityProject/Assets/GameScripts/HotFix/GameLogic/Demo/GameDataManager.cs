@@ -14,7 +14,9 @@ public class CharacterData
 
     private int _affection;
     private int _trust;
-    
+    private int _hp;
+    private int _satiety;
+
     // 好感度
     public int Affection
     {
@@ -25,6 +27,7 @@ public class CharacterData
             GameEvent.EventMgr.GetInterface<IGameDataEvent>().DataChanged();
         }
     }
+
     // 信任度
     public int Trust
     {
@@ -36,8 +39,19 @@ public class CharacterData
         }
     }
 
+    // 生命
+    public int Hp
+    {
+        get => _hp;
+        set => _hp = value > 0 ? value : 0;
+    }
+
     // 饱腹
-    public int Satiety;
+    public int Satiety
+    {
+        get => _satiety;
+        set => _satiety = value > 0 ? value : 0;
+    }
 
     // 压力
     public int Stress;
@@ -114,12 +128,15 @@ public sealed class GameDataManager : Singleton<GameDataManager>
         _stamina = 7;
         CharacterData characterData1 = new CharacterData();
         characterData1.Name = "我";
+        characterData1.Hp = 10;
         characterData1.Satiety = 7;
         CharacterData characterData2 = new CharacterData();
         characterData2.Name = "张三";
+        characterData2.Hp = 10;
         characterData2.Satiety = 7;
         CharacterData characterData3 = new CharacterData();
         characterData3.Name = "李四";
+        characterData3.Hp = 10;
         characterData3.Satiety = 7;
         CharacterDataList.Clear();
         CharacterDataList.Add(characterData1);

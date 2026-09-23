@@ -18,6 +18,7 @@ namespace GameLogic
 
 		private UIBindComponent m_bindComponent;
 		private TextMeshProUGUI m_tmpName = null!;
+		private TextMeshProUGUI m_tmpHp = null!;
 		private TextMeshProUGUI m_tmpSatiety = null!;
 
 		protected override void ScriptGenerator()
@@ -29,7 +30,8 @@ namespace GameLogic
 				return;
 			}
 			m_tmpName = m_bindComponent.GetComponent<TextMeshProUGUI>(0);
-			m_tmpSatiety = m_bindComponent.GetComponent<TextMeshProUGUI>(1);
+			m_tmpHp = m_bindComponent.GetComponent<TextMeshProUGUI>(1);
+			m_tmpSatiety = m_bindComponent.GetComponent<TextMeshProUGUI>(2);
 		}
 
 		#endregion

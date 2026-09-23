@@ -23,7 +23,7 @@ namespace GameLogic
                 .SetUpdate(true)
                 .SetLink(gameObject, LinkBehaviour.KillOnDestroy)
                 .Append(m_imgBlack.DOFade(1f, FadeDuration).SetEase(Ease.InOutSine))
-                .AppendCallback(() => GameDataManager.Instance.Day++)
+                .AppendCallback(DaySettlement.Settle)
                 .AppendInterval(BlackScreenDuration)
                 .Append(m_imgBlack.DOFade(0f, FadeDuration).SetEase(Ease.InOutSine))
                 .OnComplete(() =>
