@@ -67,6 +67,22 @@ public sealed class GameDataManager : Singleton<GameDataManager>
     public List<CharacterData> CharacterDataList = new();
     public List<ItemData> ItemDataList = new();
 
+    /// <summary>
+    /// 消耗指定道具，并把饱腹值应用到当前角色列表中的目标角色。
+    /// </summary>
+    public bool TryUseItem(ItemData itemData, CharacterData characterData, int satiety)
+    {
+        if (itemData == null || characterData == null ||
+            !CharacterDataList.Contains(characterData) || !ItemDataList.Remove(itemData))
+        {
+            return false;
+        }
+
+        characterData.Satiety += satiety;
+        GameEvent.EventMgr.GetInterface<IGameDataEvent>().DataChanged();
+        return true;
+    }
+
     protected override void OnInit()
     {
         Reset();

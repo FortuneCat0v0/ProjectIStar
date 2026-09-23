@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using GameConfig;
 using TEngine;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace GameLogic
 {
@@ -14,108 +15,173 @@ namespace GameLogic
         [SerializeField, Min(1)] private int columns = 5;
         [SerializeField] private Vector2 spacing = new(0.25f, 0.25f);
 
-        private readonly List<GameObject> _instances = new();
-        private int _desiredCount = -1;
+        private readonly List<ItemModelView> _views = new();
         private bool _loadFailed;
 
         private void Update()
         {
-            int currentCount = CountMatchingItems(GameDataManager.Instance.ItemDataList);
-            if (currentCount == _desiredCount)
-            {
-                return;
-            }
-
-            _desiredCount = currentCount;
             if (!_loadFailed)
             {
-                Synchronize(currentCount);
+                Synchronize(GameDataManager.Instance.ItemDataList);
             }
         }
 
-        private void Synchronize(int desiredCount)
+        private void Synchronize(IReadOnlyList<ItemData> items)
         {
-            while (_instances.Count > desiredCount)
+            bool changed = false;
+            for (int i = _views.Count - 1; i >= 0; i--)
             {
-                RemoveLastInstance();
+                ItemModelView view = _views[i];
+                if (view.ItemData == null || !ContainsReference(items, view.ItemData))
+                {
+                    RemoveViewAt(i);
+                    changed = true;
+                }
             }
 
-            if (_instances.Count == desiredCount)
+            for (int i = 0; i < items.Count; i++)
             {
-                return;
+                ItemData itemData = items[i];
+                if (itemData == null || itemData.itemId != itemId || ContainsView(itemData))
+                {
+                    continue;
+                }
+
+                if (!TryCreateView(itemData))
+                {
+                    break;
+                }
+
+                changed = true;
             }
 
+            if (changed)
+            {
+                ArrangeInstances();
+            }
+        }
+
+        private bool TryCreateView(ItemData itemData)
+        {
             ItemRow itemRow = ConfigSystem.Instance.Tables.TbItem.GetOrDefault(itemId);
             if (itemRow == null || string.IsNullOrWhiteSpace(itemRow.Actor))
             {
                 Log.Error($"ItemModelList '{name}' cannot find a model address for item {itemId}.");
                 _loadFailed = true;
-                return;
+                return false;
             }
 
             if (!GameModule.Resource.CheckLocationValid(itemRow.Actor))
             {
                 Log.Error($"ItemModelList '{name}' model address '{itemRow.Actor}' is invalid.");
                 _loadFailed = true;
-                return;
+                return false;
             }
 
-            while (_instances.Count < desiredCount)
+            GameObject instance = GameModule.Resource.LoadGameObject(itemRow.Actor, transform);
+            if (instance == null)
             {
-                GameObject instance = GameModule.Resource.LoadGameObject(itemRow.Actor, transform);
-                if (instance == null)
-                {
-                    Log.Error($"ItemModelList '{name}' failed to load '{itemRow.Actor}'.");
-                    _loadFailed = true;
-                    break;
-                }
-
-                instance.name = $"{itemRow.Actor}_{_instances.Count + 1}";
-                _instances.Add(instance);
+                Log.Error($"ItemModelList '{name}' failed to load '{itemRow.Actor}'.");
+                _loadFailed = true;
+                return false;
             }
 
-            ArrangeInstances();
+            instance.name = $"{itemRow.Actor}_{_views.Count + 1}";
+            ItemWorldInteraction interaction = instance.GetComponent<ItemWorldInteraction>();
+            if (interaction == null)
+            {
+                interaction = instance.AddComponent<ItemWorldInteraction>();
+            }
+
+            interaction.Initialize(itemData);
+            _views.Add(new ItemModelView(itemData, instance));
+            return true;
         }
 
-        private int CountMatchingItems(IReadOnlyList<ItemData> items)
+        private bool ContainsView(ItemData itemData)
         {
-            int count = 0;
+            for (int i = 0; i < _views.Count; i++)
+            {
+                if (ReferenceEquals(_views[i].ItemData, itemData))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static bool ContainsReference(IReadOnlyList<ItemData> items, ItemData itemData)
+        {
             for (int i = 0; i < items.Count; i++)
             {
-                if (items[i] != null && items[i].itemId == itemId)
+                if (ReferenceEquals(items[i], itemData))
                 {
-                    count++;
+                    return true;
                 }
             }
 
-            return count;
+            return false;
         }
 
-        private void RemoveLastInstance()
+        private void RemoveViewAt(int index)
         {
-            int lastIndex = _instances.Count - 1;
-            GameObject instance = _instances[lastIndex];
-            _instances.RemoveAt(lastIndex);
+            GameObject instance = _views[index].Instance;
+            _views.RemoveAt(index);
             if (instance != null)
             {
                 Destroy(instance);
             }
-
-            ArrangeInstances();
         }
 
         private void ArrangeInstances()
         {
             int columnCount = Mathf.Max(1, columns);
-            for (int i = 0; i < _instances.Count; i++)
+            for (int i = 0; i < _views.Count; i++)
             {
                 int column = i % columnCount;
                 int row = i / columnCount;
-                Transform instanceTransform = _instances[i].transform;
+                Transform instanceTransform = _views[i].Instance.transform;
                 instanceTransform.localPosition = new Vector3(column * spacing.x, row * spacing.y, 0f);
                 instanceTransform.localRotation = Quaternion.identity;
                 instanceTransform.localScale = Vector3.one;
             }
+        }
+
+        private sealed class ItemModelView
+        {
+            public ItemModelView(ItemData itemData, GameObject instance)
+            {
+                ItemData = itemData;
+                Instance = instance;
+            }
+
+            public ItemData ItemData { get; }
+            public GameObject Instance { get; }
+        }
+    }
+
+    /// <summary>
+    /// 把带 Collider 的场景道具点击转发给独立交互界面。
+    /// </summary>
+    public sealed class ItemWorldInteraction : MonoBehaviour
+    {
+        private ItemData _itemData;
+
+        public void Initialize(ItemData itemData)
+        {
+            _itemData = itemData;
+        }
+
+        private void OnMouseDown()
+        {
+            if (_itemData == null ||
+                (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject()))
+            {
+                return;
+            }
+
+            GameModule.UI.ShowUI<InteractionUI>(new ItemInteractionData(_itemData, transform.position));
         }
     }
 }
