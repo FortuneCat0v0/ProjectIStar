@@ -19,6 +19,9 @@ public sealed partial class GlobalRow : Luban.BeanBase
         MaxBagNum = _buf.ReadInt();
         MaxStamina = _buf.ReadInt();
         MaxStress = _buf.ReadInt();
+        CharacterIdMy = _buf.ReadInt();
+        CharacterIdErGou = _buf.ReadInt();
+        CharacterIdCuiHua = _buf.ReadInt();
     }
 
     public static GlobalRow DeserializeGlobalRow(ByteBuf _buf)
@@ -38,6 +41,9 @@ public sealed partial class GlobalRow : Luban.BeanBase
     /// 最大压力
     /// </summary>
     public readonly int MaxStress;
+    public readonly int CharacterIdMy;
+    public readonly int CharacterIdErGou;
+    public readonly int CharacterIdCuiHua;
    
     public const int __ID__ = -1903061225;
     public override int GetTypeId() => __ID__;
@@ -52,6 +58,9 @@ public sealed partial class GlobalRow : Luban.BeanBase
         + "MaxBagNum:" + MaxBagNum + ","
         + "MaxStamina:" + MaxStamina + ","
         + "MaxStress:" + MaxStress + ","
+        + "CharacterIdMy:" + CharacterIdMy + ","
+        + "CharacterIdErGou:" + CharacterIdErGou + ","
+        + "CharacterIdCuiHua:" + CharacterIdCuiHua + ","
         + "}";
     }
 }

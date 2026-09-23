@@ -13,6 +13,7 @@ namespace GameConfig
 {
 public partial class Tables
 {
+    public TbCharacter TbCharacter {get; }
     public TbGameplayGraph TbGameplayGraph {get; }
     public TbGameplayNode TbGameplayNode {get; }
     public TbGameplayGraphTrigger TbGameplayGraphTrigger {get; }
@@ -21,6 +22,7 @@ public partial class Tables
 
     public Tables(System.Func<string, ByteBuf> loader)
     {
+        TbCharacter = new TbCharacter(loader("tbcharacter"));
         TbGameplayGraph = new TbGameplayGraph(loader("tbgameplaygraph"));
         TbGameplayNode = new TbGameplayNode(loader("tbgameplaynode"));
         TbGameplayGraphTrigger = new TbGameplayGraphTrigger(loader("tbgameplaygraphtrigger"));
@@ -31,6 +33,7 @@ public partial class Tables
     
     private void ResolveRef()
     {
+        TbCharacter.ResolveRef(this);
         TbGameplayGraph.ResolveRef(this);
         TbGameplayNode.ResolveRef(this);
         TbGameplayGraphTrigger.ResolveRef(this);

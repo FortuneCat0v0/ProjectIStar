@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Cysharp.Threading.Tasks;
+using GameConfig;
 using GameLogic;
 #if ENABLE_OBFUZ
 using Obfuz;
@@ -35,29 +36,39 @@ public partial class GameApp
         Log.Warning("======= StartGameLogic =======");
         StartGameLogic().Forget();
     }
-    
+
     private static async UniTask StartGameLogic()
     {
         GameModule.UI.Active();
-        
+
         // GameEvent.Get<ILoginUI>().ShowLoginUI();
         await GameModule.Scene.LoadSceneAsync("House");
 
-        int index = 0;
-        foreach (var item in GameDataManager.Instance.CharacterDataList)
+        foreach (var characterData in GameDataManager.Instance.CharacterDataList)
         {
-            GameObject character = await GameModule.Resource.LoadGameObjectAsync("Character");
-            character.name = item.Name;
+            CharacterRow characterRow = ConfigSystem.Instance.Tables.TbCharacter.Get(characterData.CharacterId);
 
-            character.transform.position = new Vector2(index, 0);
-            index++;
+            GameObject character = await GameModule.Resource.LoadGameObjectAsync(characterRow.Actor);
+
+            if (characterData.CharacterId == ConfigSystem.Instance.Tables.TbGlobal.CharacterIdMy)
+            {
+                character.transform.position = new Vector3(0, 0, 0);
+            }
+            if (characterData.CharacterId == ConfigSystem.Instance.Tables.TbGlobal.CharacterIdErGou)
+            {
+                character.transform.position = new Vector3(-1, 0, 0);
+            }
+            if (characterData.CharacterId == ConfigSystem.Instance.Tables.TbGlobal.CharacterIdCuiHua)
+            {
+                character.transform.position = new Vector3(1, 0, 0);
+            }
         }
-        
+
         GameModule.UI.ShowUIAsync<MainUI>();
-        
+
         GameplayManager.Instance.TriggerDay(GameDataManager.Instance.Day);
     }
-    
+
     private static void Release()
     {
         SingletonSystem.Release();

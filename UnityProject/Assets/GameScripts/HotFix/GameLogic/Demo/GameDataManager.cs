@@ -10,7 +10,8 @@ public class CourseData
 
 public class CharacterData
 {
-    public string Name;
+    public int CharacterId { get; private set; }
+    public string Name => ConfigSystem.Instance.Tables.TbCharacter.Get(CharacterId).Name;
 
     private int _affection;
     private int _trust;
@@ -55,6 +56,13 @@ public class CharacterData
 
     // 压力
     public int Stress;
+
+    public CharacterData(int id)
+    {
+        CharacterId = id;
+        Hp = 10;
+        Satiety = 7;
+    }
 }
 
 public class ItemData
@@ -72,12 +80,26 @@ public sealed class GameDataManager : Singleton<GameDataManager>
     private int _stamina;
 
     // 当前天数
-    public int Day { get => _day; set => SetValue(ref _day, value); }
+    public int Day
+    {
+        get => _day;
+        set => SetValue(ref _day, value);
+    }
+
     // 时间，单位为分钟
-    public int Time { get => _time; set => SetValue(ref _time, value); }
+    public int Time
+    {
+        get => _time;
+        set => SetValue(ref _time, value);
+    }
+
     // 体力
-    public int Stamina { get => _stamina; set => SetValue(ref _stamina, value); }
-    
+    public int Stamina
+    {
+        get => _stamina;
+        set => SetValue(ref _stamina, value);
+    }
+
     public List<CharacterData> CharacterDataList = new();
     public List<ItemData> ItemDataList = new();
 
@@ -126,18 +148,9 @@ public sealed class GameDataManager : Singleton<GameDataManager>
         _day = 1;
         _time = 7 * 60;
         _stamina = 7;
-        CharacterData characterData1 = new CharacterData();
-        characterData1.Name = "我";
-        characterData1.Hp = 10;
-        characterData1.Satiety = 7;
-        CharacterData characterData2 = new CharacterData();
-        characterData2.Name = "张三";
-        characterData2.Hp = 10;
-        characterData2.Satiety = 7;
-        CharacterData characterData3 = new CharacterData();
-        characterData3.Name = "李四";
-        characterData3.Hp = 10;
-        characterData3.Satiety = 7;
+        CharacterData characterData1 = new CharacterData(ConfigSystem.Instance.Tables.TbGlobal.CharacterIdMy);
+        CharacterData characterData2 = new CharacterData(ConfigSystem.Instance.Tables.TbGlobal.CharacterIdErGou);
+        CharacterData characterData3 = new CharacterData(ConfigSystem.Instance.Tables.TbGlobal.CharacterIdCuiHua);
         CharacterDataList.Clear();
         CharacterDataList.Add(characterData1);
         CharacterDataList.Add(characterData2);

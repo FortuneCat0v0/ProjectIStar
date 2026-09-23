@@ -3,7 +3,7 @@ using UnityEngine;
 namespace GameLogic
 {
     [RequireComponent(typeof(Rigidbody))]
-    public sealed class EchoCharacterController : MonoBehaviour
+    public sealed class PlayerCharacterController : MonoBehaviour
     {
         [SerializeField, Min(0f)] private float moveSpeed = 4f;
         [SerializeField] private Animator animator;

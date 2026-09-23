@@ -39,6 +39,9 @@ public partial class TbGlobal
     /// 最大压力
     /// </summary>
      public int MaxStress => _data.MaxStress;
+     public int CharacterIdMy => _data.CharacterIdMy;
+     public int CharacterIdErGou => _data.CharacterIdErGou;
+     public int CharacterIdCuiHua => _data.CharacterIdCuiHua;
     
     public void ResolveRef(Tables tables)
     {

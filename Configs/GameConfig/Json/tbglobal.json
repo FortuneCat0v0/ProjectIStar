@@ -2,6 +2,9 @@
   {
     "MaxBagNum": 10,
     "MaxStamina": 100,
-    "MaxStress": 100
+    "MaxStress": 100,
+    "CharacterId_My": 1001,
+    "CharacterId_ErGou": 1002,
+    "CharacterId_CuiHua": 1003
   }
 ]
